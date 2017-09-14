@@ -34,10 +34,10 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:26.+'
     testCompile 'junit:junit:4.12'
-    compile files('libs/AMap_Location_V3.4.0_20170427.jar')
     compile 'com.alibaba:fastjson:1.2.10'
     compile "com.github.bumptech.glide:glide:3.7.0"
     compile "com.github.Away-Leo:CommonDialog:1.0.0"
+    compile "com.github.Away-Leo:PXGMllib:1.0.5"//meijie
     //OKHttp
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     //RxJava和RxAndroid 用来做线程切换的
