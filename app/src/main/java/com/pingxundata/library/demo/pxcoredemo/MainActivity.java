@@ -16,8 +16,8 @@ public class MainActivity extends AppCompatActivity {
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,DemoHttpsRequestActivity.class);
-//                intent.putExtra("url","http://91qianmi.com/bmember/imgregister.xhtm?inviteCode=A918216");
+                Intent intent=new Intent(MainActivity.this,DemoWebActivity.class);
+                intent.putExtra("url","http://91qianmi.com/bmember/imgregister.xhtm?inviteCode=A918216");
                 startActivity(intent);
             }
         });

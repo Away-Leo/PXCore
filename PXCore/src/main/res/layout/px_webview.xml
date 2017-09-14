@@ -4,19 +4,25 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="3dip"
-        android:progressDrawable="@drawable/pg"/>
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="3dip"
+            android:visibility="gone"
+            android:progressDrawable="@drawable/pg"/>
+        <!--网页浏览控件-->
+        <com.pingxundata.pxcore.views.PXWebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
 
-    <!--网页浏览控件-->
-    <com.pingxundata.pxcore.views.PXWebView
-        android:id="@+id/webView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/webviewTools"
