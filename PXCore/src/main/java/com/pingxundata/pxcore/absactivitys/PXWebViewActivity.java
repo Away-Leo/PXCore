@@ -174,7 +174,7 @@ public abstract class PXWebViewActivity extends Activity {
         pxWebView.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-                webviewTools.setVisibility(View.VISIBLE);
+                /*webviewTools.setVisibility(View.VISIBLE);
                 DownloadManager.getInstance(getApplication()).download(url, new DownLoadObserver() {
                     @Override
                     public void onNext(DownloadInfo value) {
@@ -195,7 +195,10 @@ public abstract class PXWebViewActivity extends Activity {
                             }
                         }
                     }
-                });
+                });*/
+                Uri uri = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
             }
         });
         //新页面接收数据
