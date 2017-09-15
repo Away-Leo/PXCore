@@ -3,6 +3,7 @@ package com.pingxundata.pxcore.absactivitys;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -64,6 +67,8 @@ public abstract class PXWebViewActivity extends Activity {
     String compressPath = "";
 
     public void init(int resourceId){
+        //设置全透明顶部工具栏
+        setFullTransparency();
         setContentView(resourceId);
         pxWebView=(PXWebView)findViewById(R.id.webView);
         progressBar=(ProgressBar)findViewById(R.id.progressBar);
@@ -307,6 +312,20 @@ public abstract class PXWebViewActivity extends Activity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
+    }
+
+    /**
+     * 5.0以上的手机设置全透明状态栏
+     */
+    private void setFullTransparency() {
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
     }
 
     @Override
