@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this,DemoWebActivity.class);
-                intent.putExtra("url","http://91qianmi.com/bmember/imgregister.xhtm?inviteCode=A918216");
+                intent.putExtra("url","http://weixin.xianhuahua.com/dev/coupon/couponappsix?from=1392");
                 startActivity(intent);
             }
         });

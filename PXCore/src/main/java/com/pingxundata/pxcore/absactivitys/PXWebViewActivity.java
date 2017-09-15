@@ -2,15 +2,16 @@ package com.pingxundata.pxcore.absactivitys;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.PersistableBundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -39,13 +40,13 @@ import java.io.IOException;
 import java.util.Date;
 
 /**
-* @Title: PXWebViewActivity.java
-* @Description:  平讯webView抽象activity
-* @author Away
-* @date 2017/9/12 15:24
-* @copyright 重庆平讯数据
-* @version V1.0
-*/
+ * @author Away
+ * @version V1.0
+ * @Title: PXWebViewActivity.java
+ * @Description: 平讯webView抽象activity
+ * @date 2017/9/12 15:24
+ * @copyright 重庆平讯数据
+ */
 public abstract class PXWebViewActivity extends Activity {
 
     private PXWebView pxWebView;
@@ -66,16 +67,16 @@ public abstract class PXWebViewActivity extends Activity {
     private final static int FCR = 1;
     String compressPath = "";
 
-    public void init(int resourceId){
+    public void init(int resourceId) {
         //设置全透明顶部工具栏
         setFullTransparency();
         setContentView(resourceId);
-        pxWebView=(PXWebView)findViewById(R.id.webView);
-        progressBar=(ProgressBar)findViewById(R.id.progressBar);
-        webviewTools=(LinearLayout) findViewById(R.id.webviewTools);
-        downloadProgress=(NumberProgressBar) findViewById(R.id.downloadProgress);
-        progressStr=(TextView) findViewById(R.id.progressStr);
-        if(ObjectHelper.isEmpty(pxWebView)){
+        pxWebView = (PXWebView) findViewById(R.id.webView);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        webviewTools = (LinearLayout) findViewById(R.id.webviewTools);
+        downloadProgress = (NumberProgressBar) findViewById(R.id.downloadProgress);
+        progressStr = (TextView) findViewById(R.id.progressStr);
+        if (ObjectHelper.isEmpty(pxWebView)) {
             return;
         }
         pxWebView.setWebChromeClient(new WebChromeClient() {
@@ -89,6 +90,7 @@ public abstract class PXWebViewActivity extends Activity {
                 }
                 super.onProgressChanged(view, newProgress);
             }
+
             //For Android 3.0+
             public void openFileChooser(ValueCallback<Uri> uploadMsg) {
                 selectImage();
@@ -106,7 +108,7 @@ public abstract class PXWebViewActivity extends Activity {
                 Intent i = new Intent(Intent.ACTION_GET_CONTENT);
                 i.addCategory(Intent.CATEGORY_OPENABLE);
                 i.setType("*/*");
-                startActivityForResult(Intent.createChooser(i, "File Browser"),FCR);
+                startActivityForResult(Intent.createChooser(i, "File Browser"), FCR);
             }
 
             //For Android 4.1+
@@ -116,7 +118,7 @@ public abstract class PXWebViewActivity extends Activity {
                 Intent i = new Intent(Intent.ACTION_GET_CONTENT);
                 i.addCategory(Intent.CATEGORY_OPENABLE);
                 i.setType("*/*");
-                startActivityForResult(Intent.createChooser(i, "File Chooser"),FCR);
+                startActivityForResult(Intent.createChooser(i, "File Chooser"), FCR);
             }
 
             //For Android 5.0+
@@ -177,19 +179,19 @@ public abstract class PXWebViewActivity extends Activity {
                     @Override
                     public void onNext(DownloadInfo value) {
                         super.onNext(value);
-                        Long total=value.getTotal();
-                        int progress=(int)(value.getProgress()*100L/total);
+                        Long total = value.getTotal();
+                        int progress = (int) (value.getProgress() * 100L / total);
                         updateUi(progress);
                     }
 
                     @Override
                     public void onComplete() {
                         webviewTools.setVisibility(View.GONE);
-                        if(downloadInfo != null){
-                            try{
-                                installAPk(new File(downloadInfo.getFilePath()));
-                            }catch (Exception e){
-                                Log.e("自动安装失败","webview下载自动安装APK失败",e);
+                        if (downloadInfo != null) {
+                            try {
+                                installAPk(downloadInfo);
+                            } catch (Exception e) {
+                                Log.e("自动安装失败", "webview下载自动安装APK失败", e);
                             }
                         }
                     }
@@ -198,7 +200,7 @@ public abstract class PXWebViewActivity extends Activity {
         });
         //新页面接收数据
         Bundle bundle = getIntent().getExtras();
-        if(ObjectHelper.isNotEmpty(bundle)){
+        if (ObjectHelper.isNotEmpty(bundle)) {
             //接收data值
             String mUrl = bundle.getString("url");
             pxWebView.loadUrl(mUrl);
@@ -213,10 +215,10 @@ public abstract class PXWebViewActivity extends Activity {
      * @Date 2017/9/13 19:28
      * @Copyright 重庆平讯数据
      */
-    void updateUi(int progress){
+    void updateUi(int progress) {
         this.runOnUiThread(() -> {
             downloadProgress.setProgress(progress);
-            progressStr.setText("("+progress+"%)");
+            progressStr.setText("(" + progress + "%)");
         });
     }
 
@@ -238,7 +240,7 @@ public abstract class PXWebViewActivity extends Activity {
 
     // Create an image file
     private File createImageFile() throws IOException {
-        @SuppressLint("SimpleDateFormat") String timeStamp = new Date().getTime()+"";
+        @SuppressLint("SimpleDateFormat") String timeStamp = new Date().getTime() + "";
         String imageFileName = "img_" + timeStamp + "_";
         File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         return File.createTempFile(imageFileName, ".jpg", storageDir);
@@ -298,20 +300,48 @@ public abstract class PXWebViewActivity extends Activity {
         return Uri.fromFile(newFile);
     }
 
-    private void installAPk(File apkFile) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        //如果没有设置SDCard写权限，或者没有sdcard,apk文件保存在内存中，需要授予权限才能安装
+    private void installAPk(DownloadInfo info) {
         try {
+            File apkFile = new File(info.getFileName());
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            //如果没有设置SDCard写权限，或者没有sdcard,apk文件保存在内存中，需要授予权限才能安装
             String[] command = {"chmod", "777", apkFile.toString()};
             ProcessBuilder builder = new ProcessBuilder(command);
             builder.start();
-        } catch (IOException ignored) {
+            intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (Exception e) {
+            Uri uri = Uri.parse(info.getUrl());
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         }
-        intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
 
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-
+    }
+    public static String getFilePathByUri(final Context context, final Uri uri) {
+        if (null == uri)
+            return null;
+        final String scheme = uri.getScheme();
+        String data = null;
+        if (scheme == null)
+            data = uri.getPath();
+        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
+            data = uri.getPath();
+        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+            Cursor cursor = context.getContentResolver().query(uri,
+                    new String[] { MediaStore.Images.ImageColumns.DATA }, null, null, null);
+            if (null != cursor) {
+                if (cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                    if (index > -1) {
+                        data = cursor.getString(index);
+                    }
+                }
+                cursor.close();
+            }
+        }
+        return data;
     }
 
     /**
@@ -319,7 +349,7 @@ public abstract class PXWebViewActivity extends Activity {
      */
     private void setFullTransparency() {
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
