@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.pingxundata.pxcore.autoupdate.UpdateChecker;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -13,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button testButton=(Button)findViewById(R.id.testButton);
+
+        UpdateChecker.checkForDialog(this,"xiaomi-DKQB","https://119.23.64.92/front/product/findProductVersion.json");
+
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

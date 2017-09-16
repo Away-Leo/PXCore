@@ -17,8 +17,8 @@ public class DemoHttpsRequestActivity extends Activity implements HttpsUtil.Http
 
     @Override
     public void onResult(String jsonStr, int chanel) {
-        Button button=(Button)findViewById(R.id.testButton);
-        button.setText(jsonStr);
+//        Button button=(Button)findViewById(R.id.testButton);
+//        button.setText(jsonStr);
     }
 
     @Override

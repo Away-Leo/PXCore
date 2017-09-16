@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -168,34 +169,34 @@ public abstract class PXWebViewActivity extends Activity {
         pxWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String ur) {
-                return false;//设为true使用WebView加载网页而不调用外部浏览器
+                return true;//设为true使用WebView加载网页而不调用外部浏览器
             }
         });
         pxWebView.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-                /*webviewTools.setVisibility(View.VISIBLE);
-                DownloadManager.getInstance(getApplication()).download(url, new DownLoadObserver() {
-                    @Override
-                    public void onNext(DownloadInfo value) {
-                        super.onNext(value);
-                        Long total = value.getTotal();
-                        int progress = (int) (value.getProgress() * 100L / total);
-                        updateUi(progress);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        webviewTools.setVisibility(View.GONE);
-                        if (downloadInfo != null) {
-                            try {
-                                installAPk(downloadInfo);
-                            } catch (Exception e) {
-                                Log.e("自动安装失败", "webview下载自动安装APK失败", e);
-                            }
-                        }
-                    }
-                });*/
+                //webviewTools.setVisibility(View.VISIBLE);
+//                DownloadManager.getInstance(getApplication()).download(url, new DownLoadObserver() {
+//                    @Override
+//                    public void onNext(DownloadInfo value) {
+//                        super.onNext(value);
+//                        Long total = value.getTotal();
+//                        int progress = (int) (value.getProgress() * 100L / total);
+//                        updateUi(progress);
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                        webviewTools.setVisibility(View.GONE);
+//                        if (downloadInfo != null) {
+//                            try {
+//                                installAPk(downloadInfo);
+//                            } catch (Exception e) {
+//                                Log.e("自动安装失败", "webview下载自动安装APK失败", e);
+//                            }
+//                        }
+//                    }
+//                });
                 Uri uri = Uri.parse(url);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
@@ -303,48 +304,23 @@ public abstract class PXWebViewActivity extends Activity {
         return Uri.fromFile(newFile);
     }
 
-    private void installAPk(DownloadInfo info) {
+    private void installAPkWithProvider(File apkFile) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
         try {
-            File apkFile = new File(info.getFileName());
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            //如果没有设置SDCard写权限，或者没有sdcard,apk文件保存在内存中，需要授予权限才能安装
             String[] command = {"chmod", "777", apkFile.toString()};
             ProcessBuilder builder = new ProcessBuilder(command);
             builder.start();
+        } catch (IOException ignored) {
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Uri contentUri = FileProvider.getUriForFile(this, getPackageName() + ".demoprovider", apkFile);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+        } else {
             intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
-
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        } catch (Exception e) {
-            Uri uri = Uri.parse(info.getUrl());
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
-
-    }
-    public static String getFilePathByUri(final Context context, final Uri uri) {
-        if (null == uri)
-            return null;
-        final String scheme = uri.getScheme();
-        String data = null;
-        if (scheme == null)
-            data = uri.getPath();
-        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
-            data = uri.getPath();
-        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
-            Cursor cursor = context.getContentResolver().query(uri,
-                    new String[] { MediaStore.Images.ImageColumns.DATA }, null, null, null);
-            if (null != cursor) {
-                if (cursor.moveToFirst()) {
-                    int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-                    if (index > -1) {
-                        data = cursor.getString(index);
-                    }
-                }
-                cursor.close();
-            }
-        }
-        return data;
+        startActivity(intent);
     }
 
     /**
