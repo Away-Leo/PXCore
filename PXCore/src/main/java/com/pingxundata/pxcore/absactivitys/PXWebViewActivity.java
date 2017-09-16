@@ -175,7 +175,7 @@ public abstract class PXWebViewActivity extends Activity {
         pxWebView.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-                //webviewTools.setVisibility(View.VISIBLE);
+//                webviewTools.setVisibility(View.VISIBLE);
 //                DownloadManager.getInstance(getApplication()).download(url, new DownLoadObserver() {
 //                    @Override
 //                    public void onNext(DownloadInfo value) {
@@ -190,7 +190,7 @@ public abstract class PXWebViewActivity extends Activity {
 //                        webviewTools.setVisibility(View.GONE);
 //                        if (downloadInfo != null) {
 //                            try {
-//                                installAPk(downloadInfo);
+//                                installAPkWithProvider(new File(downloadInfo.getFileName()));
 //                            } catch (Exception e) {
 //                                Log.e("自动安装失败", "webview下载自动安装APK失败", e);
 //                            }

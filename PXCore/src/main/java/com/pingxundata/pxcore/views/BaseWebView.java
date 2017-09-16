@@ -41,7 +41,7 @@ public class BaseWebView extends NestWebView implements SwipeRefreshLayout.CanSc
         webSetting.setDisplayZoomControls(false);
         webSetting.setLoadWithOverviewMode(true);
         webSetting.setJavaScriptCanOpenWindowsAutomatically(true);
-        webSetting.setSupportMultipleWindows(true);
+//        webSetting.setSupportMultipleWindows(true);
         webSetting.setNeedInitialFocus(true);
         webSetting.setSupportZoom(false);
         webSetting.setBuiltInZoomControls(false);
@@ -86,6 +86,7 @@ public class BaseWebView extends NestWebView implements SwipeRefreshLayout.CanSc
         if (action == MotionEvent.ACTION_DOWN) {
             onScrollChanged(getScrollX(), getScrollY(), getScrollX(), getScrollY());
         }
+        getParent().requestDisallowInterceptTouchEvent(false);
         // 第一种不完美解决方案
             /*
             boolean ret = super.onTouchEvent(ev);
@@ -105,7 +106,7 @@ public class BaseWebView extends NestWebView implements SwipeRefreshLayout.CanSc
             return ret;
              */
         // 第二种完美解决方案
-        return action == MotionEvent.ACTION_CANCEL && mIgnoreTouchCancel || super.onTouchEvent(ev);
+        return super.onTouchEvent(ev);
     }
 
     @Override
