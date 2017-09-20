@@ -16,13 +16,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button testButton=(Button)findViewById(R.id.testButton);
 
-        UpdateChecker.checkForDialog(this,"xiaomi-DKQB","https://119.23.64.92/front/product/findProductVersion.json");
+//        UpdateChecker.checkForDialog(this,"xiaomi-DKQB","https://119.23.64.92/front/product/findProductVersion.json");
 
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this,DemoWebActivity.class);
-                intent.putExtra("url","http://weixin.xianhuahua.com/dev/coupon/couponappsix?from=1392");
+                intent.putExtra("url","http://www.m.starcredit.cn/NLanding/?s=hz-02mmbd");
 //                intent.putExtra("url","http://api.cashtaxi.cn/download/index.html");
                 startActivity(intent);
             }

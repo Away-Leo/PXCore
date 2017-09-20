@@ -1,5 +1,6 @@
 package com.pingxundata.pxcore.metadata.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public class RequestResult {
     /**
      * 返回集合
      */
-    private List<?> resultList;
+    private List<?> resultList=new ArrayList<>();
 
     /**
      * 总记录数

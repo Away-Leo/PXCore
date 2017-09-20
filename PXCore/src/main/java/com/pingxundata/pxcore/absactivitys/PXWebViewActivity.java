@@ -190,7 +190,7 @@ public abstract class PXWebViewActivity extends Activity {
 //                        webviewTools.setVisibility(View.GONE);
 //                        if (downloadInfo != null) {
 //                            try {
-//                                installAPkWithProvider(new File(downloadInfo.getFileName()));
+//                                installAPkWithProvider(new File(downloadInfo.getFilePath()));
 //                            } catch (Exception e) {
 //                                Log.e("自动安装失败", "webview下载自动安装APK失败", e);
 //                            }
