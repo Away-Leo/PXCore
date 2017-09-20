@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.pingxundata.pxcore.autoupdate.UpdateChecker;
+import com.pingxundata.pxcore.utils.PermissionUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,10 +22,11 @@ public class MainActivity extends AppCompatActivity {
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,DemoWebActivity.class);
-                intent.putExtra("url","http://www.m.starcredit.cn/NLanding/?s=hz-02mmbd");
-//                intent.putExtra("url","http://api.cashtaxi.cn/download/index.html");
-                startActivity(intent);
+//                Intent intent=new Intent(MainActivity.this,DemoWebActivity.class);
+//                intent.putExtra("url","http://www.m.starcredit.cn/NLanding/?s=hz-02mmbd");
+////                intent.putExtra("url","http://api.cashtaxi.cn/download/index.html");
+//                startActivity(intent);
+                PermissionUtil.goSystemPermissonSetting(MainActivity.this);
             }
         });
     }
