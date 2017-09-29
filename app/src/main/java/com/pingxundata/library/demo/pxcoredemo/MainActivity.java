@@ -22,11 +22,11 @@ public class MainActivity extends AppCompatActivity {
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent=new Intent(MainActivity.this,DemoWebActivity.class);
-//                intent.putExtra("url","http://www.m.starcredit.cn/NLanding/?s=hz-02mmbd");
-////                intent.putExtra("url","http://api.cashtaxi.cn/download/index.html");
-//                startActivity(intent);
-                PermissionUtil.goSystemPermissonSetting(MainActivity.this);
+                Intent intent=new Intent(MainActivity.this,DemoWebActivity.class);
+                intent.putExtra("url","https://h5.jiumiaodai.com/html/register?channel=pxmbd");
+//                intent.putExtra("url","http://api.cashtaxi.cn/download/index.html");
+                startActivity(intent);
+//                PermissionUtil.goSystemPermissonSetting(MainActivity.this);
             }
         });
     }

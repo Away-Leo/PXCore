@@ -21,6 +21,8 @@ import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
@@ -169,7 +171,16 @@ public abstract class PXWebViewActivity extends Activity {
         pxWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String ur) {
-                return false;//设为true使用WebView加载网页而不调用外部浏览器
+                if(ur.toLowerCase().startsWith("http")){
+                    return false;//设为true使用WebView加载网页而不调用外部浏览器
+                }else{
+                    return true;
+                }
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
             }
         });
         pxWebView.setDownloadListener(new DownloadListener() {
@@ -349,5 +360,12 @@ public abstract class PXWebViewActivity extends Activity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private boolean isExternalApplicationUrl(String url) {
+        return url.startsWith("vnd.") ||
+                url.startsWith("rtsp://") ||
+                url.startsWith("itms://") ||
+                url.startsWith("itpc://");
     }
 }
