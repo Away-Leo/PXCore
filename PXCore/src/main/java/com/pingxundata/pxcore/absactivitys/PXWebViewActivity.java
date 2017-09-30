@@ -34,6 +34,7 @@ import com.pingxundata.pxcore.R;
 import com.pingxundata.pxcore.download.DownLoadObserver;
 import com.pingxundata.pxcore.download.DownloadInfo;
 import com.pingxundata.pxcore.download.DownloadManager;
+import com.pingxundata.pxcore.utils.AndroidBug5497Workaround;
 import com.pingxundata.pxcore.utils.FileUtils;
 import com.pingxundata.pxcore.utils.ObjectHelper;
 import com.pingxundata.pxcore.views.PXWebView;
@@ -74,6 +75,7 @@ public abstract class PXWebViewActivity extends Activity {
         //设置全透明顶部工具栏
         setFullTransparency();
         setContentView(resourceId);
+        AndroidBug5497Workaround.assistActivity(this);
         pxWebView = (PXWebView) findViewById(R.id.webView);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         webviewTools = (LinearLayout) findViewById(R.id.webviewTools);
