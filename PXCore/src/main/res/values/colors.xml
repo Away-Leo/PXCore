@@ -2,6 +2,7 @@
 <resources>
     <color name="downLoadStr">#F98E0E</color>
     <color name="mainColor">#F2F2F2</color>
+    <color name="transformed">#333333</color>
 
 
 </resources>

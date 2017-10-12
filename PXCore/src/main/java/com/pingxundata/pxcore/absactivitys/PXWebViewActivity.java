@@ -30,6 +30,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
+import com.github.lzyzsd.circleprogress.CircleProgress;
 import com.pingxundata.pxcore.R;
 import com.pingxundata.pxcore.download.DownLoadObserver;
 import com.pingxundata.pxcore.download.DownloadInfo;
@@ -59,10 +60,7 @@ public abstract class PXWebViewActivity extends Activity {
 
     private LinearLayout webviewTools;
 
-    //downloadProgress progressStr
-    private NumberProgressBar downloadProgress;
-
-    private TextView progressStr;
+    private CircleProgress circle_progress;
 
     private String mCM;
     private String filePath = "";
@@ -79,8 +77,9 @@ public abstract class PXWebViewActivity extends Activity {
         pxWebView = (PXWebView) findViewById(R.id.webView);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         webviewTools = (LinearLayout) findViewById(R.id.webviewTools);
-        downloadProgress = (NumberProgressBar) findViewById(R.id.downloadProgress);
-        progressStr = (TextView) findViewById(R.id.progressStr);
+        circle_progress = findViewById(R.id.circle_progress);
+        circle_progress.setUnfinishedColor(Color.parseColor("#50000000"));
+        circle_progress.setFinishedColor(Color.parseColor("#95000000"));
         if (ObjectHelper.isEmpty(pxWebView)) {
             return;
         }
@@ -188,31 +187,32 @@ public abstract class PXWebViewActivity extends Activity {
         pxWebView.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-//                webviewTools.setVisibility(View.VISIBLE);
-//                DownloadManager.getInstance(getApplication()).download(url, new DownLoadObserver() {
-//                    @Override
-//                    public void onNext(DownloadInfo value) {
-//                        super.onNext(value);
-//                        Long total = value.getTotal();
-//                        int progress = (int) (value.getProgress() * 100L / total);
-//                        updateUi(progress);
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        webviewTools.setVisibility(View.GONE);
-//                        if (downloadInfo != null) {
-//                            try {
-//                                installAPkWithProvider(new File(downloadInfo.getFilePath()));
-//                            } catch (Exception e) {
-//                                Log.e("自动安装失败", "webview下载自动安装APK失败", e);
-//                            }
-//                        }
-//                    }
-//                });
-                Uri uri = Uri.parse(url);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                webviewTools.setVisibility(View.VISIBLE);
+                DownloadManager.getInstance(getApplication()).download(url, new DownLoadObserver() {
+                    @Override
+                    public void onNext(DownloadInfo value) {
+                        super.onNext(value);
+                        Long total = value.getTotal();
+                        int progress = (int) (value.getProgress() * 100L / total);
+                        updateUi(progress);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        webviewTools.setVisibility(View.GONE);
+                        if (downloadInfo != null) {
+                            try {
+                                installAPkWithProvider(new File(downloadInfo.getFilePath()));
+                            } catch (Exception e) {
+                                Log.e("自动安装失败", "webview下载自动安装APK失败", e);
+                            }
+                        }
+                        updateUi(0);
+                    }
+                });
+//                Uri uri = Uri.parse(url);
+//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//                startActivity(intent);
             }
         });
         //新页面接收数据
@@ -234,8 +234,9 @@ public abstract class PXWebViewActivity extends Activity {
      */
     void updateUi(int progress) {
         this.runOnUiThread(() -> {
-            downloadProgress.setProgress(progress);
-            progressStr.setText("(" + progress + "%)");
+//            downloadProgress.setProgress(progress);
+//            progressStr.setText("(" + progress + "%)");
+            circle_progress.setProgress(progress);
         });
     }
 

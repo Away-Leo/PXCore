@@ -6,12 +6,13 @@ android {
     buildToolsVersion "26.0.0"
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk{abiFilters "armeabi"}
 
     }
     buildTypes {
@@ -35,14 +36,16 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     testCompile 'junit:junit:4.12'
     compile 'com.alibaba:fastjson:1.2.10'
-    compile "com.github.bumptech.glide:glide:3.7.0"
-    compile "com.github.Away-Leo:CommonDialog:1.0.1"
-    compile "com.github.Away-Leo:PXGMllib:1.0.6"//meijie
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.github.Away-Leo:CommonDialog:1.0.1'
+    compile 'com.github.Away-Leo:PXGMllib:1.0.6'
+    //meijie
     //OKHttp
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     //RxJava和RxAndroid 用来做线程切换的
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.0.1'
     compile 'com.daimajia.numberprogressbar:library:1.4@aar'
+    compile 'com.github.lzyzsd:circleprogress:1.2.1'
     //对话框
 }
