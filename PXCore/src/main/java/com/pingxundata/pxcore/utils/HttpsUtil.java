@@ -42,10 +42,6 @@ public class HttpsUtil {
     private static final String DEFAULT_CHARSET = "UTF-8"; // 默认字符集
     private static final String _GET = "GET"; // GET
     private static final String _POST = "POST";// POST
-    //session
-    private static String JSESSIONID="";
-    //请求结果
-    private static String requestResult="";
 
     private HttpsHander hander;
 
@@ -59,7 +55,6 @@ public class HttpsUtil {
     private static HttpsURLConnection initHttps(String url, String method, Map<String, String> headers)
             throws IOException, NoSuchAlgorithmException, NoSuchProviderException, KeyManagementException {
         //清空上次请求结果
-        requestResult="";
         TrustManager[] tm = {new MyX509TrustManager()};
         SSLContext sslContext = SSLContext.getInstance("SSL");
         sslContext.init(null, tm, new java.security.SecureRandom());
@@ -83,7 +78,7 @@ public class HttpsUtil {
 
         http.setRequestProperty("Content-Type", "application/json");
         http.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.146 Safari/537.36");
-        if(ObjectHelper.isNotEmpty(CacheData.JSESSIONID)){
+        if (ObjectHelper.isNotEmpty(CacheData.JSESSIONID)) {
             http.setRequestProperty("Cookie", CacheData.JSESSIONID);
         }
         if (null != headers && !headers.isEmpty()) {
@@ -150,25 +145,26 @@ public class HttpsUtil {
      * get请求
      */
     public static String doGet(String url, Map<String, String> params) {
-        if(ObjectHelper.isNotEmpty(url)){
-            String requestUrl=initParams(url,params);
-            Log.i("abc", "doGet: "+getUnsafe(requestUrl));
+        if (ObjectHelper.isNotEmpty(url)) {
+            String requestUrl = initParams(url, params);
+            Log.i("abc", "doGet: " + getUnsafe(requestUrl));
             return getUnsafe(requestUrl);
-        }else{
+        } else {
             return null;
         }
     }
 
     /**
      * post请求
+     *
      * @param url
      * @param params
      * @return
      */
-    public static String doPost(String url, Map<String, String> params){
-        if(ObjectHelper.isNotEmpty(url)){
-            return post(url,params,null);
-        }else{
+    public static String doPost(String url, Map<String, String> params) {
+        if (ObjectHelper.isNotEmpty(url)) {
+            return post(url, params, null);
+        } else {
             return null;
         }
     }
@@ -192,12 +188,12 @@ public class HttpsUtil {
             out.close();
 
             InputStream in = http.getInputStream();
-            if(ObjectHelper.isNotEmpty(http.getHeaderFields().get("Set-Cookie"))){
-                List<String> cookies=http.getHeaderFields().get("Set-Cookie");
-                for(String temp:cookies){
-                    if(ObjectHelper.isNotEmpty(cookies)){
-                        if(temp.contains("JSESSIONID")){
-                            CacheData.JSESSIONID=temp;
+            if (ObjectHelper.isNotEmpty(http.getHeaderFields().get("Set-Cookie"))) {
+                List<String> cookies = http.getHeaderFields().get("Set-Cookie");
+                for (String temp : cookies) {
+                    if (ObjectHelper.isNotEmpty(cookies)) {
+                        if (temp.contains("JSESSIONID")) {
+                            CacheData.JSESSIONID = temp;
                         }
                     }
                 }
@@ -297,37 +293,39 @@ public class HttpsUtil {
         }
     }
 
-    public static HttpsUtil init(HttpsHander hander,Activity context){
-        if(ObjectHelper.isEmpty(instance)){
-            HttpsUtil ins=new HttpsUtil();
-            instance=ins;
+    public static HttpsUtil init(HttpsHander hander, Activity context) {
+        if (ObjectHelper.isEmpty(instance)) {
+            HttpsUtil ins = new HttpsUtil();
+            instance = ins;
         }
-        mContext=context;
-        instance.hander=hander;
+        mContext = context;
+        instance.hander = hander;
         return instance;
     }
 
-    public void doPostWithHander(String url,Map<String,String> params,int channel){
-        if(ObjectHelper.isNotEmpty(mContext)){
-            new Thread(() -> {
-                String resultStr=doPost(url,params);
-                mContext.runOnUiThread(() -> {
-                    instance.hander.onResult(resultStr,channel);
-                });
-            }).start();
-        }
+    public void doPostWithHander(String url, Map<String, String> params, int channel) {
+        new Thread(() -> {
+            String resultStr = doPost(url, params);
+            if (ObjectHelper.isNotEmpty(mContext)) {
+                mContext.runOnUiThread(() -> instance.hander.onResult(resultStr, channel));
+            } else {
+                instance.hander.onResult(resultStr, channel);
+            }
+        }).start();
     }
-    public void doGetWithHander(String url,Map<String,String> params,int channel){
-        if(ObjectHelper.isNotEmpty(mContext)){
-            new Thread(() -> {
-                String resultStr=doGet(url, params);
-                mContext.runOnUiThread(() -> {
-                    instance.hander.onResult(resultStr,channel);
-                });
-            }).start();
-        }
+
+    public void doGetWithHander(String url, Map<String, String> params, int channel) {
+        new Thread(() -> {
+            String resultStr = doGet(url, params);
+            if (ObjectHelper.isNotEmpty(mContext)) {
+                mContext.runOnUiThread(() -> instance.hander.onResult(resultStr, channel));
+            } else {
+                instance.hander.onResult(resultStr, channel);
+            }
+        }).start();
     }
-    public interface HttpsHander{
+
+    public interface HttpsHander {
         public void onResult(String jsonStr, int chanel);
     }
 }
