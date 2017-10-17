@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this,DemoWebActivity.class);
-                intent.putExtra("url","http://weixin.xianhuahua.com/dev/coupon/couponappsix?from=1392");
+                intent.putExtra("url","https://help.wikihost.cn/activity/register/register.html");
 //                intent.putExtra("url","http://api.cashtaxi.cn/download/index.html");
                 startActivity(intent);
 //                PermissionUtil.goSystemPermissonSetting(MainActivity.this);

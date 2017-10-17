@@ -46,7 +46,9 @@ public class BaseWebView extends NestWebView implements SwipeRefreshLayout.CanSc
         webSetting.setSupportZoom(false);
         webSetting.setBuiltInZoomControls(false);
         webSetting.setDefaultTextEncodingName("utf-8");
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webSetting.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             webSetting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
             webSetting.setLoadsImagesAutomatically(true);
