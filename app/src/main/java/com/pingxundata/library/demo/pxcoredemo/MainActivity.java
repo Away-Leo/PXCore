@@ -22,11 +22,13 @@ public class MainActivity extends AppCompatActivity {
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,DemoWebActivity.class);
-                intent.putExtra("url","https://help.wikihost.cn/activity/register/register.html");
-//                intent.putExtra("url","http://api.cashtaxi.cn/download/index.html");
-                startActivity(intent);
-//                PermissionUtil.goSystemPermissonSetting(MainActivity.this);
+//                Intent intent=new Intent(MainActivity.this,DemoWebActivity.class);
+//                intent.putExtra("url","https://help.wikihost.cn/activity/register/register.html");
+//                startActivity(intent);
+
+                ContactUsPopupView contactUsPopupView = new ContactUsPopupView(MainActivity.this);
+                contactUsPopupView.setPopupWindowFullScreen(true);
+                contactUsPopupView.showPopupWindow();
             }
         });
     }
