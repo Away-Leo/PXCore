@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.pingxundata.pxcore.autoupdate.UpdateChecker;
 import com.pingxundata.pxcore.utils.PermissionUtil;
+import com.pingxundata.pxcore.utils.WechatBanner;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +30,10 @@ public class MainActivity extends AppCompatActivity {
                 ContactUsPopupView contactUsPopupView = new ContactUsPopupView(MainActivity.this);
                 contactUsPopupView.setPopupWindowFullScreen(true);
                 contactUsPopupView.showPopupWindow();
+                //http://192.168.1.100:8099/pxbanner.jpg   http://192.168.1.100:8099/pxwechat.jpg
+
             }
         });
+        WechatBanner.with(this,"http://192.168.1.100:8099/pxbanner.jpg").pop("http://192.168.1.100:8099/pxwechat.jpg");
     }
 }

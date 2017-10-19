@@ -26,4 +26,6 @@
             android:layout_height="60dp" />
     </LinearLayout>
 
+    <include layout="@layout/wechat_parent_lay" />
+
 </android.support.constraint.ConstraintLayout>
