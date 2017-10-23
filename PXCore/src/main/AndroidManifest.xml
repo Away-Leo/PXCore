@@ -39,6 +39,8 @@
             android:name=".autoupdate.DownloadService"
             android:exported="true" />
 
+        <activity android:name=".absactivitys.PXRecommendActivity" android:screenOrientation="portrait" />
+        <activity android:name=".absactivitys.PXSimpleWebViewActivity" android:screenOrientation="portrait" />
     </application>
 
 </manifest>

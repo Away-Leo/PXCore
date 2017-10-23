@@ -361,15 +361,16 @@ public abstract class PXWebViewActivity extends Activity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && pxWebView.canGoBack()) {
             pxWebView.goBack();
             return true;
+        }else if(keyCode == KeyEvent.KEYCODE_BACK && !pxWebView.canGoBack()){
+            Bundle recevdBun=getIntent().getExtras();
+            if(ObjectHelper.isNotEmpty(recevdBun)&&ObjectHelper.isNotEmpty(recevdBun.getInt("intentFlag"))){
+                setResult(recevdBun.getInt("intentFlag"));
+            }
+            finish();
         }
         return super.onKeyDown(keyCode, event);
     }
