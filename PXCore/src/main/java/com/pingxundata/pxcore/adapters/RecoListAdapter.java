@@ -17,6 +17,7 @@ import com.pingxundata.pxcore.utils.GlideImgManager;
 import com.pingxundata.pxcore.utils.ObjectHelper;
 import com.pingxundata.pxcore.utils.ToastUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,7 +91,7 @@ public class RecoListAdapter extends BaseAdapter {
             GlideImgManager.glideLoader(mContext,productRecommend.getImg(),R.mipmap.empty_logo,R.mipmap.empty_logo,itemProductIco);
 //            Glide.with(mContext).load(productRecommend.getImg()).into(itemProductIco);
             itemProductTitle.setText(productRecommend.getName()+"");
-            itemProductLoanNm.setText(productRecommend.getLoanAmount().intValue()+"");
+            itemProductLoanNm.setText(new BigDecimal(productRecommend.getLoanAmount()).divide(new BigDecimal(10000),2,BigDecimal.ROUND_HALF_UP)+"万");
 
             recoItemContainer.setOnClickListener(view1 -> onItemClickFunction.doFunction(productRecommend));
 
