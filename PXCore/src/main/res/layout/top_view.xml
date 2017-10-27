@@ -24,7 +24,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
-                android:background="@mipmap/icon_back_white"
                 tools:ignore="ContentDescription"/>
 
         </RelativeLayout>

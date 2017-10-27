@@ -21,6 +21,7 @@ import com.pingxundata.pxcore.http.PXHttp;
 import com.pingxundata.pxcore.metadata.entity.ProductRecommend;
 import com.pingxundata.pxcore.metadata.entity.RequestResult;
 import com.pingxundata.pxcore.metadata.enums.ENUM_REQUEST_URL;
+import com.pingxundata.pxcore.utils.AppUtils;
 import com.pingxundata.pxcore.utils.ObjectHelper;
 import com.pingxundata.pxcore.utils.ToastUtils;
 import com.pingxundata.pxcore.views.PXGridView;
@@ -161,7 +162,8 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
     public void doGetRecomendData(String productId) {
         Map<String, String> params = new HashMap<>();
         params.put("productId", productId);
-        params.put("appName", appName);
+        params.put("versionNo", appName+ AppUtils.getVersionCode(this));
+        params.put("channelNo", channelNo);
         PXHttp.getInstance().setHandleInterface(this).getJson(ENUM_REQUEST_URL.DOMAIN + ENUM_REQUEST_URL.APPLY_RECOMMEND, params, 0, ProductRecommend.class);
     }
 

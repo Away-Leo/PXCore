@@ -1,6 +1,9 @@
 package com.pingxundata.pxcore.metadata.staticdatas;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CacheData {
 
     /**
@@ -18,4 +21,12 @@ public class CacheData {
      */
     public static String UPDATE_URL;
 
+    /**
+     * 全局变量
+     */
+    public static Map<String, String> GLOBALPARAMS = null;
+
+    static {
+        GLOBALPARAMS=new HashMap<>();
+    }
 }

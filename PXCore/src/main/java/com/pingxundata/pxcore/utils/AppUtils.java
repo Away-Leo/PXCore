@@ -150,14 +150,18 @@ public class AppUtils {
 	 * @return 当前应用的版本名称
 	 */
 	public static String getVersionCode(Context context) {
-		try {
-			PackageManager packageManager = context.getPackageManager();
-			PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
-			return String.valueOf(packageInfo.versionCode);
-		} catch (NameNotFoundException e) {
-			e.printStackTrace();
+		if(ObjectHelper.isNotEmpty(context)){
+			try {
+				PackageManager packageManager = context.getPackageManager();
+				PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+				return String.valueOf(packageInfo.versionCode);
+			} catch (NameNotFoundException e) {
+				e.printStackTrace();
+				return "1.0.0";
+			}
+		}else{
+			return "1.0.0";
 		}
-		return null;
 	}
 
 	/**

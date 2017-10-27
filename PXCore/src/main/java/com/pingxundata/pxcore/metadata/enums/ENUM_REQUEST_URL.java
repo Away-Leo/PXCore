@@ -139,5 +139,9 @@ public class ENUM_REQUEST_URL {
      */
     public final static String APPLY_RECOMMEND="/front/product/findApplyProductRecommend.json";
 
+    /**
+     * 积分墙
+     */
+    public final static String WALL="/common/verifyIdfaValid.json";
 
 }

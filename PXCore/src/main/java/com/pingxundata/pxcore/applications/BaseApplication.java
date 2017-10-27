@@ -9,6 +9,7 @@ import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.SPCookieStore;
 import com.lzy.okgo.https.HttpsUtils;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
+import com.pingxundata.pxcore.callbacks.AppLifecycleCallbacks;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -36,6 +37,7 @@ public abstract class BaseApplication extends Application {
         super.onCreate();
         //必须调用初始化
         initOkGo();
+        registerActivityLifecycleCallbacks(new AppLifecycleCallbacks());
     }
 
     private void initOkGo() {
@@ -103,4 +105,8 @@ public abstract class BaseApplication extends Application {
         }
     }
 
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+    }
 }
