@@ -21,7 +21,9 @@ import com.pingxundata.pxcore.views.WallPopupView;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,14 +58,23 @@ public class IntegralWallManager {
 
     private static void permissionCheckAndDo(Activity context) {
         if (Build.VERSION.SDK_INT >= 23) {
-            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED||
+                    ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                List<String> needRequestPers=new ArrayList<String>();
                 if (context.shouldShowRequestPermissionRationale(Manifest.permission.READ_PHONE_STATE)) {
-                    new CommomDialog(context, R.style.dialog, "请开启获取手机信息权限，以便提高服务质量", (dialog, confirm) -> {
-                        context.requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 701);
+                    needRequestPers.add(Manifest.permission.READ_PHONE_STATE);
+                }
+                if(context.shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)){
+                    needRequestPers.add(Manifest.permission.ACCESS_FINE_LOCATION);
+                }
+                if(needRequestPers.size()>0){
+                    new CommomDialog(context, R.style.dialog, "请开启获取手机信息和定位权限，以便提高服务质量", (dialog, confirm) -> {
+                        context.requestPermissions((String[])(needRequestPers.toArray()), 701);
                         dialog.dismiss();
                     }).setTitle("权限").setContentPosition(Gravity.CENTER).show();
-                } else {
-                    context.requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 701);
+                }
+                else {
+                    context.requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE,Manifest.permission.ACCESS_FINE_LOCATION}, 701);
                 }
             }
             //针对小米手机的权限检查
@@ -87,25 +98,17 @@ public class IntegralWallManager {
 
     public static void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
         boolean success = grantResults.length > 0;
-        String message = "";
-//        switch (requestCode) {
-//            case 701:
-//                message = "请开启定位权限，以便能及时获取您的位置";
-//                break;
-//        }
-        for (int i : grantResults) {
-            success = success && i == PackageManager.PERMISSION_GRANTED;
-        }
-        if (success) {
-            if (requestCode == 701) {
-                int MODE = MIUIUtil.checkAppops(mContext, AppOpsManager.OPSTR_READ_PHONE_STATE);
-                if (MODE == MIUIUtil.MODE_ASK) {
-                    //TODO 系统权限设置为询问
-                } else if (MODE == MIUIUtil.MODE_IGNORED) {
-                    //TODO 系统权限设置为忽略
-                } else {
-//                    Toast.makeText(this, "权限授予成功", Toast.LENGTH_LONG).show();
-                    readIMEIAndDoPop(mContext);
+        if(requestCode==701){
+            if(success){
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    int MODE = MIUIUtil.checkAppops(mContext, AppOpsManager.OPSTR_READ_PHONE_STATE);
+                    if (MODE == MIUIUtil.MODE_ASK) {
+                        //TODO 系统权限设置为询问
+                    } else if (MODE == MIUIUtil.MODE_IGNORED) {
+                        //TODO 系统权限设置为忽略
+                    } else {
+                        readIMEIAndDoPop(mContext);
+                    }
                 }
             }
         }
