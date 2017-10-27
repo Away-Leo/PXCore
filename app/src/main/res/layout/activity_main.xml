@@ -22,4 +22,11 @@
             android:layout_height="60dp" />
     </LinearLayout>
 
+    <com.pingxundata.pxcore.views.DragFloatActionButton
+        android:id="@+id/wallFloatingButton"
+        android:layout_width="50dp"
+        android:layout_marginLeft="-25dp"
+        android:background="@drawable/roundbottom"
+        android:layout_height="50dp" />
+
 </LinearLayout>

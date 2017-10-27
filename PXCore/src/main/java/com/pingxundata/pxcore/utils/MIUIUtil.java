@@ -20,10 +20,11 @@ import java.util.Properties;
  */
 
 public class MIUIUtil {
-    public static final int MODE_NOTMIUI=-1;
-    public static final int MODE_ALLOWED=0;
-    public static final int MODE_IGNORED=1;
-    public static final int MODE_ASK=4;
+    public static final int MODE_NOTMIUI = -1;
+    public static final int MODE_ALLOWED = 0;
+    public static final int MODE_IGNORED = 1;
+    public static final int MODE_ASK = 4;
+
     /**
      * 查看原生态的权限是否有授权
      *
@@ -82,27 +83,25 @@ public class MIUIUtil {
      * @param context context
      */
     public static void jumpToPermissionsEditorActivity(Context context) {
-        if (isMIUI()) {
+        try {
+            // MIUI 8
+            Intent localIntent = new Intent("miui.intent.action.APP_PERM_EDITOR");
+            localIntent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.PermissionsEditorActivity");
+            localIntent.putExtra("extra_pkgname", context.getPackageName());
+            context.startActivity(localIntent);
+        } catch (Exception e) {
             try {
-                // MIUI 8
+                // MIUI 5/6/7
                 Intent localIntent = new Intent("miui.intent.action.APP_PERM_EDITOR");
-                localIntent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.PermissionsEditorActivity");
+                localIntent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.AppPermissionsEditorActivity");
                 localIntent.putExtra("extra_pkgname", context.getPackageName());
                 context.startActivity(localIntent);
-            } catch (Exception e) {
-                try {
-                    // MIUI 5/6/7
-                    Intent localIntent = new Intent("miui.intent.action.APP_PERM_EDITOR");
-                    localIntent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.AppPermissionsEditorActivity");
-                    localIntent.putExtra("extra_pkgname", context.getPackageName());
-                    context.startActivity(localIntent);
-                } catch (Exception e1) {
-                    // 否则跳转到应用详情
-                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    Uri uri = Uri.fromParts("package", context.getPackageName(), null);
-                    intent.setData(uri);
-                    context.startActivity(intent);
-                }
+            } catch (Exception e1) {
+                // 否则跳转到应用详情
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                Uri uri = Uri.fromParts("package", context.getPackageName(), null);
+                intent.setData(uri);
+                context.startActivity(intent);
             }
         }
     }

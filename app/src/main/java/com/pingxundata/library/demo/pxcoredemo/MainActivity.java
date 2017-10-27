@@ -15,15 +15,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.pingxun.library.commondialog.CommomDialog;
 import com.pingxun.library.guomeilibrary.meijie.MIUIUtil;
 import com.pingxundata.pxcore.metadata.interfaces.IFunction;
 import com.pingxundata.pxcore.utils.GDlocationUtil;
 import com.pingxundata.pxcore.utils.IntegralWallManager;
+import com.pingxundata.pxcore.utils.ToastUtils;
+import com.pingxundata.pxcore.utils.WallManager;
 import com.pingxundata.pxcore.utils.WechatBanner;
+import com.pingxundata.pxcore.views.DragFloatActionButton;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,17 +60,12 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 //        getCellLac();
-        IntegralWallManager.integralWindow(0,this,"");
+        WallManager.with(this,(DragFloatActionButton)findViewById(R.id.wallFloatingButton),"APP").doWall();
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        IntegralWallManager.onRequestPermissionsResult(requestCode, permissions, grantResults, new IFunction() {
-            @Override
-            public void doFunction(Object object) {
-
-            }
-        });
+        WallManager.onRequestPermissionsResult(requestCode,permissions,grantResults);
     }
 
     public void  getCellLac() {
@@ -123,4 +122,9 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //        function.onCallBack("北京/北京市," + location.getLatitude() + "/" + location.getLongitude());
         }
+
+    @Override
+    public void onClick(View view) {
+//        ToastUtils.showToast(MainActivity.this,"3333333");
+    }
 }
