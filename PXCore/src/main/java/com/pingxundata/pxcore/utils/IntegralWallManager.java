@@ -105,9 +105,6 @@ public class IntegralWallManager {
 //                    Toast.makeText(this, "权限授予成功", Toast.LENGTH_LONG).show();
                     readIMEIAndDoPop(mContext);
                 }
-            } else {
-//                Toast.makeText(this, "权限授予成功", Toast.LENGTH_LONG).show();
-                readIMEIAndDoPop(mContext);
             }
         }
     }
