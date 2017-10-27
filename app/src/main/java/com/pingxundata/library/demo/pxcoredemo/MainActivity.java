@@ -18,6 +18,7 @@ import android.widget.Button;
 
 import com.pingxun.library.commondialog.CommomDialog;
 import com.pingxun.library.guomeilibrary.meijie.MIUIUtil;
+import com.pingxundata.pxcore.metadata.interfaces.IFunction;
 import com.pingxundata.pxcore.utils.GDlocationUtil;
 import com.pingxundata.pxcore.utils.IntegralWallManager;
 import com.pingxundata.pxcore.utils.WechatBanner;
@@ -60,7 +61,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        IntegralWallManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        IntegralWallManager.onRequestPermissionsResult(requestCode, permissions, grantResults, new IFunction() {
+            @Override
+            public void doFunction(Object object) {
+
+            }
+        });
     }
 
     public void  getCellLac() {

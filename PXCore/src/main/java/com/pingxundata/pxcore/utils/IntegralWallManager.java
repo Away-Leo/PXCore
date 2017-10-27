@@ -16,6 +16,7 @@ import com.pingxundata.pxcore.R;
 import com.pingxundata.pxcore.http.PXHttp;
 import com.pingxundata.pxcore.metadata.entity.RequestResult;
 import com.pingxundata.pxcore.metadata.enums.ENUM_REQUEST_URL;
+import com.pingxundata.pxcore.metadata.interfaces.IFunction;
 import com.pingxundata.pxcore.services.FloatViewServiceManager;
 import com.pingxundata.pxcore.views.WallPopupView;
 
@@ -96,20 +97,26 @@ public class IntegralWallManager {
         }
     }
 
-    public static void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+    public static void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults, IFunction iFunction){
         boolean success = grantResults.length > 0;
         if(requestCode==701){
             if(success){
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    int MODE = MIUIUtil.checkAppops(mContext, AppOpsManager.OPSTR_READ_PHONE_STATE);
-                    if (MODE == MIUIUtil.MODE_ASK) {
-                        //TODO 系统权限设置为询问
-                    } else if (MODE == MIUIUtil.MODE_IGNORED) {
-                        //TODO 系统权限设置为忽略
-                    } else {
-                        readIMEIAndDoPop(mContext);
+                for(int i=0;i<grantResults.length;i++){
+                    String perName=permissions[i];
+                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                        int MODE = MIUIUtil.checkAppops(mContext, AppOpsManager.OPSTR_READ_PHONE_STATE);
+                        if (MODE == MIUIUtil.MODE_ASK) {
+                            //TODO 系统权限设置为询问
+                        } else if (MODE == MIUIUtil.MODE_IGNORED) {
+                            //TODO 系统权限设置为忽略
+                        } else {
+                            if(perName.equalsIgnoreCase(Manifest.permission.READ_PHONE_STATE)){
+                                readIMEIAndDoPop(mContext);
+                            }
+                        }
                     }
                 }
+                iFunction.doFunction("");
             }
         }
     }
