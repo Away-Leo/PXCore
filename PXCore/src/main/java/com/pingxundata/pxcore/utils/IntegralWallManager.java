@@ -41,10 +41,13 @@ public class IntegralWallManager {
 
     static final int SEND_WALL=0;
 
+    static String mAppName;
 
-    public static void integralWindow(int switchCode,Activity context) {
+
+    public static void integralWindow(int switchCode,Activity context,String appName) {
         if(ObjectHelper.isNotEmpty(context)){
             mContext = context;
+            mAppName=appName;
             if(ObjectHelper.isNotEmpty(switchCode)&&switchCode==0){
                 permissionCheckAndDo(mContext);
             }
@@ -119,6 +122,7 @@ public class IntegralWallManager {
             conditions.put("deviceNo",imeiStr);
             conditions.put("code",imei16);
             conditions.put("encryptStr",encryptStr);
+            conditions.put("appName",mAppName);
             PXHttp.getInstance().setHandleInterface(onHander).upJson(ENUM_REQUEST_URL.DOMAIN+ENUM_REQUEST_URL.WALL,new JSONObject(conditions),SEND_WALL,String.class);
             FloatViewServiceManager.showFloatView(context);
             FloatViewServiceManager.setOnClickCallBack(view -> {
