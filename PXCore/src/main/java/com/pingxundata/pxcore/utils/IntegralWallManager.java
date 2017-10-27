@@ -39,7 +39,7 @@ public class IntegralWallManager {
 
     static WallPopupView wallPop;
 
-    static final int SEND_WALL=0;
+    static final int SEND_WALL=1001001;
 
     static String mAppName;
 
