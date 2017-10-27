@@ -62,7 +62,6 @@ public class IntegralWallManager {
                 } else {
                     context.requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 701);
                 }
-                return;
             }
             //针对小米手机的权限检查
             int MODE = MIUIUtil.checkAppops(context, AppOpsManager.OPSTR_READ_PHONE_STATE);
