@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AppOpsManager;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -40,13 +41,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent=new Intent(MainActivity.this,DemoWebActivity.class);
-//                intent.putExtra("url","https://help.wikihost.cn/activity/register/register.html");
-//                startActivity(intent);
+                Intent intent=new Intent(MainActivity.this,DemoWebActivity.class);
+                intent.putExtra("url","https://help.wikihost.cn/activity/register/register.html");
+                startActivity(intent);
 
-                ContactUsPopupView contactUsPopupView = new ContactUsPopupView(MainActivity.this);
-                contactUsPopupView.setPopupWindowFullScreen(true);
-                contactUsPopupView.showPopupWindow();
+//                ContactUsPopupView contactUsPopupView = new ContactUsPopupView(MainActivity.this);
+//                contactUsPopupView.setPopupWindowFullScreen(true);
+//                contactUsPopupView.showPopupWindow();
                 //http://192.168.1.100:8099/pxbanner.jpg   http://192.168.1.100:8099/pxwechat.jpg
 
             }

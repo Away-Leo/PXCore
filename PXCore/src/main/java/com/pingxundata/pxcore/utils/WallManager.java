@@ -4,9 +4,7 @@ package com.pingxundata.pxcore.utils;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AppOpsManager;
-import android.content.Context;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
 import android.view.Gravity;
@@ -14,7 +12,6 @@ import android.view.Gravity;
 import com.pingxun.library.commondialog.CommomDialog;
 import com.pingxundata.pxcore.R;
 import com.pingxundata.pxcore.metadata.entity.Wall;
-import com.pingxundata.pxcore.metadata.interfaces.IFunction;
 import com.pingxundata.pxcore.views.DragFloatActionButton;
 
 /**

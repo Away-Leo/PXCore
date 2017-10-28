@@ -13,6 +13,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 
 import com.pingxundata.pxcore.utils.DensityUtil;
+import com.pingxundata.pxcore.utils.ObjectHelper;
 import com.pingxundata.pxcore.utils.ToastUtils;
 
 /**   
@@ -112,7 +113,7 @@ public class DragFloatActionButton extends Button {
             case MotionEvent.ACTION_UP:
                 endClickX = event.getX();
                 if (endClickX - firstClickX == 0) {
-                    this.mOnClickListener.onClick(this);
+                    if(ObjectHelper.isNotEmpty(this.mOnClickListener))this.mOnClickListener.onClick(this);
                 }else{
                     if(!isNotDrag()){
                         //恢复按压效果
