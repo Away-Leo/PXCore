@@ -61,7 +61,7 @@ public class Wall {
     }
 
     public void doWall() {
-        if(ObjectHelper.isNotEmpty(mButton)){
+        if(ObjectHelper.isNotEmpty(mButton)&&ObjectHelper.isNotEmpty(this.mContext)){
             mButton.setmOnClickListener(view -> this.doWallClick());
         }
     }

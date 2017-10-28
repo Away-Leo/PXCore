@@ -28,20 +28,17 @@ public class WallManager {
 
     private static Wall wall;
 
-    public static Wall with(Activity context, DragFloatActionButton button, String appName){
-        if(ObjectHelper.isNotEmpty(context)){
-            mContext=context;
-            wall=new Wall(context,button,appName);
-        }
-        return wall;
+    public static Wall with(Activity context, DragFloatActionButton button, String appName) {
+        mContext = context;
+        return new Wall(context, button, appName);
     }
 
-    public static void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+    public static void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         boolean success = grantResults.length > 0;
-        if(requestCode==701){
-            if(success){
-                for(int i=0;i<grantResults.length;i++){
-                    String perName=permissions[i];
+        if (requestCode == 701) {
+            if (success) {
+                for (int i = 0; i < grantResults.length; i++) {
+                    String perName = permissions[i];
                     if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                         int MODE = MIUIUtil.checkAppops(mContext, AppOpsManager.OPSTR_READ_PHONE_STATE);
                         if (MODE == MIUIUtil.MODE_ASK) {
@@ -54,18 +51,18 @@ public class WallManager {
 //                            }
                         } else if (MODE == MIUIUtil.MODE_IGNORED) {
                             new CommomDialog(mContext, R.style.dialog, "请开启获取手机信息权限，以便提高服务质量", (dialog, confirm) -> {
-                                if(confirm){
+                                if (confirm) {
                                     MIUIUtil.jumpToPermissionsEditorActivity(mContext);
                                     dialog.dismiss();
                                 }
                             }).setTitle("权限").setContentPosition(Gravity.CENTER).show();
                         } else {
-                            if(perName.equalsIgnoreCase(Manifest.permission.READ_PHONE_STATE)){
+                            if (perName.equalsIgnoreCase(Manifest.permission.READ_PHONE_STATE)) {
                                 wall.doWallClick();
                                 return;
                             }
                         }
-                    }else{
+                    } else {
                         new CommomDialog(mContext, R.style.dialog, "请开启获取手机信息权限，以便提高服务质量", (dialog, confirm) -> {
                             MIUIUtil.jumpToPermissionsEditorActivity(mContext);
                             dialog.dismiss();
