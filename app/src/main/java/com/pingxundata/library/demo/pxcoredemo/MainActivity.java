@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            }
 //        });
 //        getCellLac();
-        WallManager.with(this,null,"APP").doWall();
+        WallManager.with(this,(DragFloatActionButton)findViewById(R.id.wallFloatingButton),"APP").doWall();
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

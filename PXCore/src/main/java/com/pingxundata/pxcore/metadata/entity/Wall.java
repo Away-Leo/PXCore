@@ -62,7 +62,12 @@ public class Wall {
 
     public void doWall() {
         if(ObjectHelper.isNotEmpty(mButton)&&ObjectHelper.isNotEmpty(this.mContext)){
-            mButton.setmOnClickListener(view -> this.doWallClick());
+            mButton.setmOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    doWallClick();
+                }
+            });
         }
     }
 
@@ -75,7 +80,7 @@ public class Wall {
                 }
                 if (needRequestPers.size() > 0) {
                     new CommomDialog(mContext, R.style.dialog, "请开启获取手机信息权限，以便提高服务质量", (dialog, confirm) -> {
-                        mContext.requestPermissions((String[]) (needRequestPers.toArray()), 701);
+                        mContext.requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 701);
                         dialog.dismiss();
                     }).setTitle("权限").setContentPosition(Gravity.CENTER).show();
                 } else {

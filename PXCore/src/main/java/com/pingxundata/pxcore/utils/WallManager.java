@@ -30,7 +30,8 @@ public class WallManager {
 
     public static Wall with(Activity context, DragFloatActionButton button, String appName) {
         mContext = context;
-        return new Wall(context, button, appName);
+        wall=new Wall(context, button, appName);
+        return wall;
     }
 
     public static void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -64,8 +65,10 @@ public class WallManager {
                         }
                     } else {
                         new CommomDialog(mContext, R.style.dialog, "请开启获取手机信息权限，以便提高服务质量", (dialog, confirm) -> {
-                            MIUIUtil.jumpToPermissionsEditorActivity(mContext);
-                            dialog.dismiss();
+                            if(confirm){
+                                MIUIUtil.jumpToPermissionsEditorActivity(mContext);
+                                dialog.dismiss();
+                            }
                         }).setTitle("权限").setContentPosition(Gravity.CENTER).show();
                     }
                 }

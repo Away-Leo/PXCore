@@ -30,14 +30,15 @@ public class DragFloatActionButton extends Button {
     private int parentHeight;
     private int parentWidth;
     private Context mContext;
-    private OnClickListener mOnClickListener;
+    private static OnClickListener mOnClickListener;
 
-    public OnClickListener getmOnClickListener() {
+
+    public static OnClickListener getmOnClickListener() {
         return mOnClickListener;
     }
 
-    public void setmOnClickListener(OnClickListener mOnClickListener) {
-        this.mOnClickListener = mOnClickListener;
+    public static void setmOnClickListener(OnClickListener mOnClickListener) {
+        DragFloatActionButton.mOnClickListener = mOnClickListener;
     }
 
     public DragFloatActionButton(Context context) {
