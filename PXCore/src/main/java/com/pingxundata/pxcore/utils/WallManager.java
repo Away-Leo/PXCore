@@ -31,9 +31,7 @@ public class WallManager {
     public static Wall with(Activity context, DragFloatActionButton button, String appName){
         if(ObjectHelper.isNotEmpty(context)){
             mContext=context;
-            if(ObjectHelper.isEmpty(wall)){
-                wall=new Wall(context,button,appName);
-            }
+            wall=new Wall(context,button,appName);
         }
         return wall;
     }
