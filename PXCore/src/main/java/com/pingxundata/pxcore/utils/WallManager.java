@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.telephony.TelephonyManager;
 import android.view.Gravity;
 
 import com.pingxun.library.commondialog.CommomDialog;
@@ -49,18 +50,24 @@ public class WallManager {
                     if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                         int MODE = MIUIUtil.checkAppops(mContext, AppOpsManager.OPSTR_READ_PHONE_STATE);
                         if (MODE == MIUIUtil.MODE_ASK) {
+                            TelephonyManager tm = (TelephonyManager) mContext.getSystemService(mContext.TELEPHONY_SERVICE);
+                            String imeiStr = tm.getDeviceId();
                             //TODO 系统权限设置为询问
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                mContext.requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 701);
-                            }
+//                            if(perName.equalsIgnoreCase(Manifest.permission.READ_PHONE_STATE)){
+//                                wall.doWallClick();
+//                                return;
+//                            }
                         } else if (MODE == MIUIUtil.MODE_IGNORED) {
                             new CommomDialog(mContext, R.style.dialog, "请开启获取手机信息权限，以便提高服务质量", (dialog, confirm) -> {
-                                MIUIUtil.jumpToPermissionsEditorActivity(mContext);
-                                dialog.dismiss();
+                                if(confirm){
+                                    MIUIUtil.jumpToPermissionsEditorActivity(mContext);
+                                    dialog.dismiss();
+                                }
                             }).setTitle("权限").setContentPosition(Gravity.CENTER).show();
                         } else {
                             if(perName.equalsIgnoreCase(Manifest.permission.READ_PHONE_STATE)){
                                 wall.doWallClick();
+                                return;
                             }
                         }
                     }else{
