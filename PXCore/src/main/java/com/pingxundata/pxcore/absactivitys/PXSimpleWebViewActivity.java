@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.pingxundata.pxcore.R;
+import com.pingxundata.pxcore.applications.BaseApplication;
 import com.pingxundata.pxcore.http.PXHttp;
 import com.pingxundata.pxcore.metadata.enums.ENUM_REQUEST_URL;
 import com.pingxundata.pxcore.utils.ObjectHelper;
@@ -33,6 +34,7 @@ public class PXSimpleWebViewActivity extends PXWebViewActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init(R.layout.pxsimple_web_view);
+        BaseApplication.addActivity(this);
         initDatas();
     }
 

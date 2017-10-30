@@ -1,5 +1,6 @@
 package com.pingxundata.pxcore.applications;
 
+import android.app.Activity;
 import android.app.Application;
 
 import com.lzy.okgo.OkGo;
@@ -10,7 +11,10 @@ import com.lzy.okgo.cookie.store.SPCookieStore;
 import com.lzy.okgo.https.HttpsUtils;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.pingxundata.pxcore.callbacks.AppLifecycleCallbacks;
+import com.pingxundata.pxcore.utils.ObjectHelper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
@@ -21,16 +25,18 @@ import okhttp3.OkHttpClient;
 
 
 /**
-* @Title: BaseApplication.java
-* @Description: application基类
-* @author Away
-* @date 2017/10/20 11:18
-* @copyright 重庆平讯数据
-* @version V1.0
-*/
+ * @author Away
+ * @version V1.0
+ * @Title: BaseApplication.java
+ * @Description: application基类
+ * @date 2017/10/20 11:18
+ * @copyright 重庆平讯数据
+ */
 public abstract class BaseApplication extends Application {
 
     public static int CONNECTION_TIMED_OUT = 5000;//设置连接超时时间
+
+    private static List<Activity> activitys = new ArrayList<>();
 
     @Override
     public void onCreate() {
@@ -38,6 +44,21 @@ public abstract class BaseApplication extends Application {
         //必须调用初始化
         initOkGo();
         registerActivityLifecycleCallbacks(new AppLifecycleCallbacks());
+    }
+
+    public static void addActivity(Activity activity) {
+        activitys.add(activity);
+    }
+
+    public static void clearActivity() {
+        if (ObjectHelper.isNotEmpty(activitys)) {
+            for (Activity activity : activitys) {
+                if(ObjectHelper.isNotEmpty(activity)){
+                    activity.finish();
+                }
+            }
+            activitys.clear();
+        }
     }
 
     private void initOkGo() {

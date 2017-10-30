@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.pingxundata.pxcore.R;
 import com.pingxundata.pxcore.adapters.RecoListAdapter;
+import com.pingxundata.pxcore.applications.BaseApplication;
 import com.pingxundata.pxcore.http.PXHttp;
 import com.pingxundata.pxcore.metadata.entity.ProductRecommend;
 import com.pingxundata.pxcore.metadata.entity.RequestResult;
@@ -66,6 +67,8 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
 
     protected String applyArea;
 
+    protected String actualDetailActivity;
+
     protected int backImg;
 
     protected int titleColor;
@@ -81,18 +84,21 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
         super.onCreate(savedInstanceState);
         setFullTransparency();
         setContentView(R.layout.recommend_page);
+        BaseApplication.addActivity(this);
+
         Bundle bundle = this.getIntent().getExtras();
         productId = bundle.getString("productId");
         productName = bundle.getString("productName");
         appName = bundle.getString("appName");
         channelNo = bundle.getString("channelNo");
         applyArea = bundle.getString("applyArea");
+        actualDetailActivity=bundle.getString("actualDetailActivity");
         setResources(bundle);
 
         tv_topview_title = (TextView) findViewById(R.id.tv_topview_title);
         tv_topview_title.setText("相似产品");
         iv_topview_back = (RelativeLayout) findViewById(R.id.iv_topview_back);
-        iv_topview_back.setOnClickListener(view -> finish());
+        iv_topview_back.setOnClickListener(view -> BaseApplication.clearActivity());
         top_back_btn = (ImageView) findViewById(R.id.top_back_btn);
         success_msg = (TextView) findViewById(R.id.success_msg);
         recommendList = (PXGridView) findViewById(R.id.recommendList);
@@ -120,21 +126,27 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
                             ProductRecommend lineData = (ProductRecommend) object;
                             productId = lineData.getId() + "";
                             productName = lineData.getName();
-                            Intent intent = new Intent(PXRecommendActivity.this, PXSimpleWebViewActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putString("url", lineData.getUrl());
-                            bundle.putInt("intentFlag", 2006);
-                            bundle.putString("productName", lineData.getName());
-                            bundle.putString("sourceProductId", lineData.getId()+"");
-                            bundle.putString("productId", productId);
-                            bundle.putString("applyArea", applyArea);
-                            bundle.putString("channelNo", channelNo);
-                            bundle.putString("appName",appName);
-                            bundle.putInt("backImg",backImg);
-                            bundle.putInt("titleColor",titleColor);
-                            bundle.putInt("topBack",topBack);
-                            intent.putExtras(bundle);
-                            startActivityForResult(intent, 2006);
+                            if(ObjectHelper.isNotEmpty(actualDetailActivity)){
+                                try {
+                                    Intent intent = new Intent(PXRecommendActivity.this, Class.forName(actualDetailActivity));
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("url", lineData.getUrl());
+                                    bundle.putInt("intentFlag", 2006);
+                                    bundle.putString("productName", lineData.getName());
+                                    bundle.putString("sourceProductId", lineData.getId()+"");
+                                    bundle.putString("productId", productId);
+                                    bundle.putString("applyArea", applyArea);
+                                    bundle.putString("channelNo", channelNo);
+                                    bundle.putString("appName",appName);
+                                    bundle.putInt("backImg",backImg);
+                                    bundle.putInt("titleColor",titleColor);
+                                    bundle.putInt("topBack",topBack);
+                                    intent.putExtras(bundle);
+                                    startActivityForResult(intent, 2006);
+                                } catch (ClassNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         });
                         recommendList.setAdapter(adapter);
                         adapter.setData((List<ProductRecommend>) requestResult.getResultList());
@@ -149,9 +161,9 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (ObjectHelper.isNotEmpty(requestCode) && requestCode == 2006) {
-            recommend_refresh.autoRefresh();
-        }
+//        if (ObjectHelper.isNotEmpty(requestCode) && requestCode == 2006) {
+//            recommend_refresh.autoRefresh();
+//        }
     }
 
     @Override
@@ -169,7 +181,7 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
 
     @Override
     public void onBackPressed() {
-        finish();
+        BaseApplication.clearActivity();
     }
 
     /**

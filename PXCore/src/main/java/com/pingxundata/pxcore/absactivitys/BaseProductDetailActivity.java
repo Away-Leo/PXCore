@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.pingxundata.pxcore.R;
+import com.pingxundata.pxcore.applications.BaseApplication;
 import com.pingxundata.pxcore.utils.ActivityUtil;
 import com.pingxundata.pxcore.utils.ObjectHelper;
 
@@ -57,6 +58,7 @@ public abstract class BaseProductDetailActivity extends AppCompatActivity {
             bundleJump.putString("appName", appName);
             bundleJump.putString("channelNo",channelNo);
             bundleJump.putString("applyArea",applyArea );
+            bundleJump.putString("actualDetailActivity",this.getClass().getName());
             bundleJump.putInt("backImg",this.backImg);
             bundleJump.putInt("titleColor",this.titleColor);
             bundleJump.putInt("topBack",this.topBack);
@@ -83,6 +85,7 @@ public abstract class BaseProductDetailActivity extends AppCompatActivity {
         dataBundle.putInt("backImg",this.backImg);
         dataBundle.putInt("titleColor",this.titleColor);
         dataBundle.putInt("topBack",this.topBack);
+        BaseApplication.addActivity(this);
         //如果开关为推荐
         if(ObjectHelper.isNotEmpty(recommendCd)&&recommendCd==0){
             ActivityUtil.goForward(this, PXSimpleWebViewActivity.class, WEBVIEW_RESULT, dataBundle);
