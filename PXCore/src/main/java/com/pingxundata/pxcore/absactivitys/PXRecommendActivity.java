@@ -174,7 +174,7 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
     public void doGetRecomendData(String productId) {
         Map<String, String> params = new HashMap<>();
         params.put("productId", productId);
-        params.put("versionNo", appName+ AppUtils.getVersionCode(this));
+        params.put("versionNo", appName+ AppUtils.getVersionCode(getApplicationContext()));
         params.put("channelNo", channelNo);
         PXHttp.getInstance().setHandleInterface(this).getJson(ENUM_REQUEST_URL.DOMAIN + ENUM_REQUEST_URL.APPLY_RECOMMEND, params, 0, ProductRecommend.class);
     }

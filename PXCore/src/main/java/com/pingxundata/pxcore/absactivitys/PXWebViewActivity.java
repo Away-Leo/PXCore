@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -33,6 +34,11 @@ import android.widget.TextView;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.github.lzyzsd.circleprogress.CircleProgress;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.FileCallback;
+import com.lzy.okgo.model.Progress;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.pingxundata.pxcore.R;
 import com.pingxundata.pxcore.download.DownLoadObserver;
 import com.pingxundata.pxcore.download.DownloadInfo;
@@ -196,32 +202,36 @@ public abstract class PXWebViewActivity extends Activity {
         pxWebView.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-                webviewTools.setVisibility(View.VISIBLE);
-                DownloadManager.getInstance(getApplication()).download(url, new DownLoadObserver() {
-                    @Override
-                    public void onNext(DownloadInfo value) {
-                        super.onNext(value);
-                        Long total = value.getTotal();
-                        int progress = (int) (value.getProgress() * 100L / total);
-                        updateUi(progress);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        webviewTools.setVisibility(View.GONE);
-                        if (downloadInfo != null) {
-                            try {
-                                installAPkWithProvider(new File(downloadInfo.getFilePath()));
-                            } catch (Exception e) {
-                                Log.e("自动安装失败", "webview下载自动安装APK失败", e);
-                            }
-                        }
-                        updateUi(0);
-                    }
-                });
-//                Uri uri = Uri.parse(url);
-//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//                startActivity(intent);
+//                webviewTools.setVisibility(View.VISIBLE);
+//                DownloadManager.getInstance(getApplication()).download(url, new DownLoadObserver() {
+//                    @Override
+//                    public void onNext(DownloadInfo value) {
+//                        super.onNext(value);
+//                        Long total = value.getTotal();
+//                        int progress = (int) (value.getProgress() * 100L / total);
+//                        updateUi(progress);
+//                    }
+//                    @Override
+//                    public void onComplete() {
+//                        webviewTools.setVisibility(View.GONE);
+//                        if (downloadInfo != null) {
+//                            try {
+//                                installAPkWithProvider(new File(downloadInfo.getFilePath()));
+//                            } catch (Exception e) {
+//                                Log.e("自动安装失败", "webview下载自动安装APK失败", e);
+//                            }
+//                        }
+//                        updateUi(0);
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.e("2100","20002",e);
+//                    }
+//                });
+                Uri uri = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
             }
         });
         //新页面接收数据

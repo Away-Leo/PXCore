@@ -37,12 +37,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button testButton = (Button) findViewById(R.id.testButton);
 
 //        UpdateChecker.checkForDialog(this,"xiaomi-DKQB","https://119.23.64.92/front/product/findProductVersion.json");
-
+//        final String urrrl="http://m.doudouhua.cn/register/?agent=DDHAPP&channel=miaobidai";
+        final String urrrl="http://channel.shandaiking.cn/act/light-loan-xjx-beta?invite_code=NTY4NjA0MA==&user_from=1534";
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this,DemoWebActivity.class);
-                intent.putExtra("url","https://help.wikihost.cn/activity/register/register.html");
+                intent.putExtra("url",urrrl);
                 startActivity(intent);
 
 //                ContactUsPopupView contactUsPopupView = new ContactUsPopupView(MainActivity.this);
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-        WechatBanner.with(this, "http://192.168.1.100:8099/pxbanner.jpg").pop("http://192.168.1.100:8099/pxwechat.jpg");
+//        WechatBanner.with(this, "http://192.168.1.100:8099/pxbanner.jpg").pop("http://192.168.1.100:8099/pxwechat.jpg");
 //        FloatViewServiceManager.showFloatView(this);
 //        FloatViewServiceManager.setOnClickCallBack(new View.OnClickListener() {
 //            @Override
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            }
 //        });
 //        getCellLac();
-        WallManager.with(this,(DragFloatActionButton)findViewById(R.id.wallFloatingButton),"APP").doWall();
+//        WallManager.with(this,(DragFloatActionButton)findViewById(R.id.wallFloatingButton),"APP").doWall();
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
