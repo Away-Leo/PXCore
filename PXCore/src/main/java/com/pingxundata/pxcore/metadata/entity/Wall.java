@@ -50,10 +50,21 @@ public class Wall {
 
     static final int SEND_WALL = 1001001;
 
-    public Wall(Activity context, DragFloatActionButton button, String appName) {
+    public Wall(Activity context, DragFloatActionButton button, String appName,int isOpen) {
         this.mContext = context;
         this.mAppName = appName;
         this.mButton=button;
+        if(ObjectHelper.isNotEmpty(button)){
+            if(ObjectHelper.isNotEmpty(isOpen)){
+                if(isOpen==0){
+                    button.setVisibility(View.VISIBLE);
+                }else{
+                    button.setVisibility(View.GONE);
+                }
+            }else{
+                button.setVisibility(View.GONE);
+            }
+        }
     }
 
     public Wall() {

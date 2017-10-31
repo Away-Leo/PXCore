@@ -28,9 +28,9 @@ public class WallManager {
 
     private static Wall wall;
 
-    public static Wall with(Activity context, DragFloatActionButton button, String appName) {
+    public static Wall with(Activity context, DragFloatActionButton button, String appName,int isOpen) {
         mContext = context;
-        wall=new Wall(context, button, appName);
+        wall=new Wall(context, button, appName,isOpen);
         return wall;
     }
 
