@@ -12,7 +12,7 @@ public class ENUM_REQUEST_URL {
 //    public final static String DOMAIN="https://192.168.1.188:9527";
 //    public final static String DOMAIN="https://192.168.1.129:9999";
 //    public final static String DOMAIN="https://192.168.1.100:1234";
-    public final static String DOMAIN="https://119.23.64.92";
+    public static String DOMAIN="https://119.23.64.92";
 
     /**
      * 请求路径
@@ -143,5 +143,10 @@ public class ENUM_REQUEST_URL {
      * 积分墙
      */
     public final static String WALL="/common/verifyIdfaValid.json";
+
+    /**
+     * 退出登录
+     */
+    public final static String LOGOUT="/common/logout.json";
 
 }
