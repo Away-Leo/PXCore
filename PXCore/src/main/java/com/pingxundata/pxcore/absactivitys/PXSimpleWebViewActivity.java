@@ -45,10 +45,9 @@ public class PXSimpleWebViewActivity extends PXWebViewActivity {
         iv_topview_back = (RelativeLayout) findViewById(R.id.iv_topview_back);
         top_back_btn = (ImageView) findViewById(R.id.top_back_btn);
         iv_topview_back.setOnClickListener(v -> {
-            Bundle recevdBun = getIntent().getExtras();
-            if (ObjectHelper.isNotEmpty(recevdBun) && ObjectHelper.isNotEmpty(recevdBun.getInt("intentFlag"))) {
-                setResult(recevdBun.getInt("intentFlag"));
-            }
+            Intent intent = new Intent();
+            intent.putExtra("sourceProductId", this.getIntent().getExtras().getString("productId"));
+            setResult(2005, intent);
             finish();
         });
         topTitle = (TextView) findViewById(R.id.tv_topview_title);
