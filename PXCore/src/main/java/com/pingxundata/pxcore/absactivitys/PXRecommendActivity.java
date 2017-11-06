@@ -133,7 +133,7 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
                                     bundle.putString("url", lineData.getUrl());
                                     bundle.putInt("intentFlag", 2006);
                                     bundle.putString("productName", lineData.getName());
-                                    bundle.putString("sourceProductId", lineData.getId()+"");
+                                    bundle.putString("sourceProductId", productId+"");
                                     bundle.putString("productId", productId);
                                     bundle.putString("applyArea", applyArea);
                                     bundle.putString("channelNo", channelNo);

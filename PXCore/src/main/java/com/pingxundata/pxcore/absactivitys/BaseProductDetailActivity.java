@@ -40,6 +40,8 @@ public abstract class BaseProductDetailActivity extends AppCompatActivity {
 
     public String applyArea;
 
+    public String sourceProductId="";
+
     int backImg;
 
     int titleColor;
@@ -79,12 +81,14 @@ public abstract class BaseProductDetailActivity extends AppCompatActivity {
         this.productName = dataBundle.getString("productName");
         this.productId = dataBundle.getString("productId");
         this.appName=dataBundle.getString("appName");
+        this.sourceProductId=ObjectHelper.isNotEmpty(getIntent().getExtras())?getIntent().getExtras().getString("sourceProductId"):"";
         this.backImg=backImg;
         this.titleColor=titleColor;
         this.topBack=topBack;
         dataBundle.putInt("backImg",this.backImg);
         dataBundle.putInt("titleColor",this.titleColor);
         dataBundle.putInt("topBack",this.topBack);
+        dataBundle.putString("sourceProductId",this.sourceProductId);
         BaseApplication.addActivity(this);
         //如果开关为推荐
         if(ObjectHelper.isNotEmpty(recommendCd)&&recommendCd==0){
