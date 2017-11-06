@@ -56,6 +56,7 @@ public abstract class BaseProductDetailActivity extends AppCompatActivity {
             Bundle bundleJump = new Bundle();
             //传递name参数为tinyphp
             bundleJump.putString("productId", productId);
+            bundleJump.putString("sourceProductId", sourceProductId);
             bundleJump.putString("productName", productName);
             bundleJump.putString("appName", appName);
             bundleJump.putString("channelNo",channelNo);

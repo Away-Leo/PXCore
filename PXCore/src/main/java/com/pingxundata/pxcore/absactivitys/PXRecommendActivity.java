@@ -61,6 +61,8 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
 
     protected String productId;
 
+    protected String sourceProductId;
+
     protected String productName;
 
     protected String channelNo;
@@ -92,6 +94,7 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
         appName = bundle.getString("appName");
         channelNo = bundle.getString("channelNo");
         applyArea = bundle.getString("applyArea");
+        sourceProductId = bundle.getString("sourceProductId");
         actualDetailActivity=bundle.getString("actualDetailActivity");
         setResources(bundle);
 
@@ -133,7 +136,7 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
                                     bundle.putString("url", lineData.getUrl());
                                     bundle.putInt("intentFlag", 2006);
                                     bundle.putString("productName", lineData.getName());
-                                    bundle.putString("sourceProductId", productId+"");
+                                    bundle.putString("sourceProductId", sourceProductId);
                                     bundle.putString("productId", productId);
                                     bundle.putString("applyArea", applyArea);
                                     bundle.putString("channelNo", channelNo);
