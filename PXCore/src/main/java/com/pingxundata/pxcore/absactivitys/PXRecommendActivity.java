@@ -134,7 +134,6 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
                                     Intent intent = new Intent(PXRecommendActivity.this, Class.forName(actualDetailActivity));
                                     Bundle bundle = new Bundle();
                                     bundle.putString("url", lineData.getUrl());
-                                    bundle.putInt("intentFlag", 2006);
                                     bundle.putString("productName", lineData.getName());
                                     bundle.putString("sourceProductId", sourceProductId);
                                     bundle.putString("productId", productId);

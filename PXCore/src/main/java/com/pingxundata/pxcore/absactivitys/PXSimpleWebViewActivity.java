@@ -1,8 +1,10 @@
 package com.pingxundata.pxcore.absactivitys;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -39,17 +41,17 @@ public class PXSimpleWebViewActivity extends PXWebViewActivity {
     }
 
     void initDatas() {
-        top_container=(RelativeLayout)findViewById(R.id.top_container);
-        iv_topview_back=(RelativeLayout)findViewById(R.id.iv_topview_back);
-        top_back_btn=(ImageView)findViewById(R.id.top_back_btn);
-        iv_topview_back.setOnClickListener(v ->{
-            Bundle recevdBun=getIntent().getExtras();
-            if(ObjectHelper.isNotEmpty(recevdBun)&&ObjectHelper.isNotEmpty(recevdBun.getInt("intentFlag"))){
-                    setResult(recevdBun.getInt("intentFlag"));
+        top_container = (RelativeLayout) findViewById(R.id.top_container);
+        iv_topview_back = (RelativeLayout) findViewById(R.id.iv_topview_back);
+        top_back_btn = (ImageView) findViewById(R.id.top_back_btn);
+        iv_topview_back.setOnClickListener(v -> {
+            Bundle recevdBun = getIntent().getExtras();
+            if (ObjectHelper.isNotEmpty(recevdBun) && ObjectHelper.isNotEmpty(recevdBun.getInt("intentFlag"))) {
+                setResult(recevdBun.getInt("intentFlag"));
             }
             finish();
         });
-        topTitle=(TextView)findViewById(R.id.tv_topview_title);
+        topTitle = (TextView) findViewById(R.id.tv_topview_title);
 
         //新页面接收数据
         Bundle bundle = this.getIntent().getExtras();
@@ -62,25 +64,25 @@ public class PXSimpleWebViewActivity extends PXWebViewActivity {
         topTitle.setText(productName);
     }
 
-    private void setResources(Bundle bundle){
-        try{
-            int backImg=bundle.getInt("backImg");
-            int titleColor=bundle.getInt("titleColor");
-            int topBack=bundle.getInt("topBack");
-            ImageView backBtn=findViewById(R.id.top_back_btn);
-            if(ObjectHelper.isNotEmpty(backImg)){
+    private void setResources(Bundle bundle) {
+        try {
+            int backImg = bundle.getInt("backImg");
+            int titleColor = bundle.getInt("titleColor");
+            int topBack = bundle.getInt("topBack");
+            ImageView backBtn = findViewById(R.id.top_back_btn);
+            if (ObjectHelper.isNotEmpty(backImg)) {
                 backBtn.setImageResource(backImg);
             }
-            TextView title=findViewById(R.id.tv_topview_title);
-            if(ObjectHelper.isNotEmpty(titleColor)){
+            TextView title = findViewById(R.id.tv_topview_title);
+            if (ObjectHelper.isNotEmpty(titleColor)) {
                 title.setTextColor(titleColor);
             }
-            RelativeLayout top_container=findViewById(R.id.top_container);
-            if(ObjectHelper.isNotEmpty(topBack)){
+            RelativeLayout top_container = findViewById(R.id.top_container);
+            if (ObjectHelper.isNotEmpty(topBack)) {
                 top_container.setBackgroundResource(topBack);
             }
-        }catch (Exception e){
-            Log.e("100032","",e);
+        } catch (Exception e) {
+            Log.e("100032", "", e);
         }
     }
 
@@ -106,12 +108,26 @@ public class PXSimpleWebViewActivity extends PXWebViewActivity {
             params.put("deviceNumber", model + "(" + carrier + ")");
             params.put("applyArea", applyArea);
             params.put("channelNo", marketCode);
-            params.put("appName",appName);
+            params.put("appName", appName);
             params.put("sourceProductId", sourceProductId);
-            PXHttp.getInstance().setHandleInterface(null).upJson(url,new org.json.JSONObject(params),10,String.class);
-        }catch (Exception e){
-            Log.e("100010","产品申请数据埋点出错",e);
+            PXHttp.getInstance().setHandleInterface(null).upJson(url, new org.json.JSONObject(params), 10, String.class);
+        } catch (Exception e) {
+            Log.e("100010", "产品申请数据埋点出错", e);
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && pxWebView.canGoBack()) {
+            pxWebView.goBack();
+            return true;
+        } else if (keyCode == KeyEvent.KEYCODE_BACK && !pxWebView.canGoBack()) {
+            Intent intent = new Intent();
+            intent.putExtra("sourceProductId", this.getIntent().getExtras().getString("productId"));
+            setResult(2005, intent);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

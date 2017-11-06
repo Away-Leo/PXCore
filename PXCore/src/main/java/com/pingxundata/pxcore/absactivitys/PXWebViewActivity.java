@@ -62,7 +62,7 @@ import java.util.Date;
  */
 public abstract class PXWebViewActivity extends Activity {
 
-    private PXWebView pxWebView;
+    public PXWebView pxWebView;
 
     private ProgressBar progressBar;
 
