@@ -1,29 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="RulerView">
-        <!--最大刻度-->
-        <attr name="max_value" format="dimension" />
-        <!--最小刻度-->
-        <attr name="min_value" format="dimension" />
-        <!--刻度字体大小-->
-        <attr name="scale_text_size" format="dimension" />
-        <!--刻度字体颜色-->
-        <attr name="scale_text_color" format="color" />
-        <!--刻度超过颜色-->
-        <attr name="scale_select_color" format="color" />
-        <!--刻度超过颜色背景-->
-        <attr name="scale_select_background_color" format="color" />
-        <!--刻度未超颜色-->
-        <attr name="scale_unselect_color" format="color" />
-        <!--标记颜色-->
-        <attr name="tag_color" format="color" />
-        <!--标尺开始显示位置-->
-        <attr name="start_location" format="dimension" />
-        <!--一屏显示Item-->
-        <attr name="show_item_size" format="integer" />
-        <!--一个刻度的大小-->
-        <attr name="one_item_value" format="integer" />
-
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="lineColor" format="color" />
+        <attr name="lineSpaceWidth" format="dimension" />
+        <attr name="lineWidth" format="dimension" />
+        <attr name="lineMaxHeight" format="dimension" />
+        <attr name="lineMidHeight" format="dimension" />
+        <attr name="lineMinHeight" format="dimension" />
+        <attr name="textMarginTop" format="dimension" />
+        <attr name="alphaEnable" format="boolean" />
+        <attr name="minValue" format="float"/>
+        <attr name="maxValue" format="float"/>
+        <attr name="selectorValue" format="float"/>
+        <attr name="perValue" format="float"/>
+        <attr name="directionUp" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="MarqueeStyle">
