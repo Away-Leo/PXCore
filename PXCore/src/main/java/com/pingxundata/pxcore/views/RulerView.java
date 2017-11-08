@@ -230,9 +230,6 @@ public class RulerView extends View {
             if (directionUp) {
                 //画刻度线
                 canvas.drawLine(left, mHeight, left, mHeight - height, mLinePaint);
-                //画底线
-                canvas.drawLine(left, mHeight, left+bottomLinePo, mHeight, mLinePaint);
-
                 if (i % 10 == 0) {
                     value = String.valueOf((int) (mMinValue + i * mPerValue / 10));
                     if (mAlphaEnable) {
