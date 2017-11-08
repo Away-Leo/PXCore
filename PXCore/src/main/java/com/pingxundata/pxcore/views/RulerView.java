@@ -206,6 +206,7 @@ public class RulerView extends View {
         int alpha = 0;
         float scale;
         int srcPointX = mWidth / 2;
+        float bottomLinePo=0;
         for (int i = 0; i < mTotalLine; i++) {
             left = srcPointX + mOffset + i * mLineSpaceWidth;
 
@@ -227,7 +228,10 @@ public class RulerView extends View {
             }
 
             if (directionUp) {
+                //画刻度线
                 canvas.drawLine(left, mHeight, left, mHeight - height, mLinePaint);
+                //画底线
+                canvas.drawLine(left, mHeight, left+bottomLinePo, mHeight, mLinePaint);
 
                 if (i % 10 == 0) {
                     value = String.valueOf((int) (mMinValue + i * mPerValue / 10));
@@ -249,6 +253,7 @@ public class RulerView extends View {
                             height + mTextMarginTop + mTextHeight, mTextPaint);
                 }
             }
+            bottomLinePo=left;
         }
     }
 

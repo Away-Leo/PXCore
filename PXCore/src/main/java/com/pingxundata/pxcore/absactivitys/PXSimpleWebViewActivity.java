@@ -102,9 +102,10 @@ public class PXSimpleWebViewActivity extends PXWebViewActivity {
             String applyArea = bundle.getString("applyArea");
             String appName = bundle.getString("appName");
             String sourceProductId = bundle.getString("sourceProductId");
+            String deviceNumber=bundle.getString("deviceNumber");
             Map<String, String> params = new HashMap<String, String>();
             params.put("productId", productId);
-            params.put("deviceNumber", model + "(" + carrier + ")");
+            params.put("deviceNumber", ObjectHelper.isEmpty(deviceNumber)?model + "(" + carrier + ")":deviceNumber);
             params.put("applyArea", applyArea);
             params.put("channelNo", marketCode);
             params.put("appName", appName);
