@@ -253,6 +253,12 @@ public class RulerView extends View {
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        getParent().requestDisallowInterceptTouchEvent(true);
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
         int xPosition = (int) event.getX();
