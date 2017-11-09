@@ -24,6 +24,7 @@ import com.pingxundata.pxcore.metadata.entity.RequestResult;
 import com.pingxundata.pxcore.metadata.enums.ENUM_REQUEST_URL;
 import com.pingxundata.pxcore.utils.AppUtils;
 import com.pingxundata.pxcore.utils.ObjectHelper;
+import com.pingxundata.pxcore.utils.SharedPrefsUtil;
 import com.pingxundata.pxcore.utils.ToastUtils;
 import com.pingxundata.pxcore.views.PXGridView;
 import com.scwang.smartrefresh.header.PhoenixHeader;
@@ -110,13 +111,47 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
         recommend_refresh.setRefreshHeader(new PhoenixHeader(this));
         recommend_refresh.setOnRefreshListener(refreshlayout -> initData());
         recommend_refresh.autoRefresh();
-
+        writeDataToSp(bundle);
     }
 
     public void initData() {
         containerScroll.smoothScrollTo(0, 0);
+        success_msg.setFocusable(true);
+        success_msg.setFocusableInTouchMode(true);
+        success_msg.requestFocus();
         success_msg.setText("感谢您使用" + productName);
         doGetRecomendData(productId);
+    }
+
+    /**
+     * @Author: Away
+     * @Description: 写入数据到sp
+     * @Param: bundle
+     * @Return void
+     * @Date 2017/11/9 14:14
+     * @Copyright 重庆平讯数据
+     */
+    private void writeDataToSp(Bundle bundle){
+        SharedPrefsUtil.putValue(this,"recoTempData","productId",bundle.getString("productId"));
+        SharedPrefsUtil.putValue(this,"recoTempData","productName",bundle.getString("productName"));
+        SharedPrefsUtil.putValue(this,"recoTempData","appName",bundle.getString("appName"));
+        SharedPrefsUtil.putValue(this,"recoTempData","channelNo",bundle.getString("channelNo"));
+        SharedPrefsUtil.putValue(this,"recoTempData","applyArea",bundle.getString("applyArea"));
+        SharedPrefsUtil.putValue(this,"recoTempData","sourceProductId",bundle.getString("sourceProductId"));
+        SharedPrefsUtil.putValue(this,"recoTempData","actualDetailActivity",bundle.getString("actualDetailActivity"));
+        SharedPrefsUtil.putValue(this,"recoTempData","backImg",bundle.getInt("backImg"));
+        SharedPrefsUtil.putValue(this,"recoTempData","titleColor",bundle.getInt("titleColor"));
+        SharedPrefsUtil.putValue(this,"recoTempData","topBack",bundle.getInt("topBack"));
+    }
+
+    private void getSpdata(){
+        productId=SharedPrefsUtil.getValue(this,"recoTempData","productId","");
+        productName=SharedPrefsUtil.getValue(this,"recoTempData","productName","");
+        appName=SharedPrefsUtil.getValue(this,"recoTempData","appName","");
+        channelNo=SharedPrefsUtil.getValue(this,"recoTempData","channelNo","");
+        applyArea=SharedPrefsUtil.getValue(this,"recoTempData","applyArea","");
+        sourceProductId=SharedPrefsUtil.getValue(this,"recoTempData","sourceProductId","");
+        actualDetailActivity=SharedPrefsUtil.getValue(this,"recoTempData","actualDetailActivity","");
     }
 
     @Override
@@ -222,6 +257,18 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
         }catch (Exception e){
             Log.e("100032","",e);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSpdata();
+        recommend_refresh.autoRefresh();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
 }
