@@ -97,8 +97,8 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
         applyArea = bundle.getString("applyArea");
         sourceProductId = bundle.getString("sourceProductId");
         actualDetailActivity=bundle.getString("actualDetailActivity");
-        setResources(bundle);
 
+        writeDataToSp(bundle);
         tv_topview_title = (TextView) findViewById(R.id.tv_topview_title);
         tv_topview_title.setText("相似产品");
         iv_topview_back = (RelativeLayout) findViewById(R.id.iv_topview_back);
@@ -111,10 +111,11 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
         recommend_refresh.setRefreshHeader(new PhoenixHeader(this));
         recommend_refresh.setOnRefreshListener(refreshlayout -> initData());
         recommend_refresh.autoRefresh();
-        writeDataToSp(bundle);
     }
 
     public void initData() {
+        getSpdata();
+        setResources();
         containerScroll.smoothScrollTo(0, 0);
         success_msg.setFocusable(true);
         success_msg.setFocusableInTouchMode(true);
@@ -132,6 +133,7 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
      * @Copyright 重庆平讯数据
      */
     private void writeDataToSp(Bundle bundle){
+        if(ObjectHelper.isEmpty(bundle.getString("productId")))return;
         SharedPrefsUtil.putValue(this,"recoTempData","productId",bundle.getString("productId"));
         SharedPrefsUtil.putValue(this,"recoTempData","productName",bundle.getString("productName"));
         SharedPrefsUtil.putValue(this,"recoTempData","appName",bundle.getString("appName"));
@@ -152,6 +154,9 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
         applyArea=SharedPrefsUtil.getValue(this,"recoTempData","applyArea","");
         sourceProductId=SharedPrefsUtil.getValue(this,"recoTempData","sourceProductId","");
         actualDetailActivity=SharedPrefsUtil.getValue(this,"recoTempData","actualDetailActivity","");
+        backImg=SharedPrefsUtil.getValue(this,"recoTempData","backImg",0);
+        titleColor=SharedPrefsUtil.getValue(this,"recoTempData","titleColor",0);
+        topBack=SharedPrefsUtil.getValue(this,"recoTempData","topBack",0);
     }
 
     @Override
@@ -237,11 +242,8 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
     }
-    private void setResources(Bundle bundle){
+    private void setResources(){
         try{
-            backImg=bundle.getInt("backImg");
-            titleColor=bundle.getInt("titleColor");
-            topBack=bundle.getInt("topBack");
             ImageView backBtn=(ImageView) findViewById(R.id.top_back_btn);
             if(ObjectHelper.isNotEmpty(backImg)){
                 backBtn.setImageResource(backImg);
@@ -262,7 +264,6 @@ public class PXRecommendActivity extends AppCompatActivity implements PXHttp.OnR
     @Override
     protected void onResume() {
         super.onResume();
-        getSpdata();
         recommend_refresh.autoRefresh();
     }
 

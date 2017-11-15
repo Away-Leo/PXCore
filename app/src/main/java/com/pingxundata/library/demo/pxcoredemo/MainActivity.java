@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //        UpdateChecker.checkForDialog(this,"xiaomi-DKQB","https://119.23.64.92/front/product/findProductVersion.json");
 //        final String urrrl="http://m.doudouhua.cn/register/?agent=DDHAPP&channel=miaobidai";
-        final String urrrl="http://channel.shandaiking.cn/act/light-loan-xjx-beta?invite_code=NTY4NjA0MA==&user_from=1534";
+//        final String urrrl="http://phone.daishuqianbao.com/h5/invite.jsp?invitationCode=null&channelCode=mbd";
+        final String urrrl="http://phone.daishuqianbao.com/h5/invite.jsp?channelCode=mbd";
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

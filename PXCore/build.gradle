@@ -39,8 +39,10 @@ dependencies {
     compile 'com.github.Away-Leo:CommonDialog:1.0.1'
     compile 'com.github.Away-Leo:PXGMllib:1.0.6'
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
-    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
-    compile 'com.lzy.net:okgo:3.0.4'//网络框架
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'
+    //没有使用特殊Header，可以不加这行
+    compile 'com.lzy.net:okgo:3.0.4'
+    //网络框架
     //OKHttp
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     //RxJava和RxAndroid 用来做线程切换的
