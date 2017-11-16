@@ -16,6 +16,8 @@
         <attr name="selectorValue" format="float"/>
         <attr name="perValue" format="float"/>
         <attr name="directionUp" format="boolean"/>
+        <attr name="showBottomLine" format="boolean"/>
+        <attr name="bottomLineWeight" format="dimension"/>
     </declare-styleable>
 
     <declare-styleable name="MarqueeStyle">

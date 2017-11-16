@@ -37,6 +37,8 @@ public class RulerView extends View {
     private float mLineMidHeight = 30;
     private float mLineMinHeight = 17;
     private boolean directionUp = true;
+    private boolean showBottomLine = true;
+    private float bottomLineWeight = 0;
     private int mLineColor = 1;
 
     private float mTextMarginTop = 8;
@@ -78,7 +80,9 @@ public class RulerView extends View {
 
         mAlphaEnable = typedArray.getBoolean(R.styleable.RulerView_alphaEnable, mAlphaEnable);
         directionUp = typedArray.getBoolean(R.styleable.RulerView_directionUp, directionUp);
+        showBottomLine = typedArray.getBoolean(R.styleable.RulerView_showBottomLine, showBottomLine);
 
+        bottomLineWeight = typedArray.getDimension(R.styleable.RulerView_bottomLineWeight, dp2px(context, bottomLineWeight));
         mLineSpaceWidth = typedArray.getDimension(R.styleable.RulerView_lineSpaceWidth, dp2px(context, mLineSpaceWidth));
         mLineWidth = typedArray.getDimension(R.styleable.RulerView_lineWidth, dp2px(context, mLineWidth));
         mLineMaxHeight = typedArray.getDimension(R.styleable.RulerView_lineMaxHeight, dp2px(context, mLineMaxHeight));
@@ -206,7 +210,7 @@ public class RulerView extends View {
         int alpha = 0;
         float scale;
         int srcPointX = mWidth / 2;
-        float bottomLinePo=0;
+        Float bottomLine=null;
         for (int i = 0; i < mTotalLine; i++) {
             left = srcPointX + mOffset + i * mLineSpaceWidth;
 
@@ -228,8 +232,11 @@ public class RulerView extends View {
             }
 
             if (directionUp) {
-                //画刻度线
                 canvas.drawLine(left, mHeight, left, mHeight - height, mLinePaint);
+                //如果为空或者为0则用默认值
+                if(showBottomLine&&bottomLineWeight!=0)mLinePaint.setStrokeWidth(bottomLineWeight);
+                if(showBottomLine&&bottomLine!=null)canvas.drawLine(bottomLine,mHeight,left,mHeight,mLinePaint);
+                mLinePaint.setStrokeWidth(mLineWidth);
                 if (i % 10 == 0) {
                     value = String.valueOf((int) (mMinValue + i * mPerValue / 10));
                     if (mAlphaEnable) {
@@ -240,7 +247,10 @@ public class RulerView extends View {
                 }
             } else {
                 canvas.drawLine(left, 0, left, height, mLinePaint);
-
+                //如果为空或者为0则用默认值
+                if(showBottomLine&&bottomLineWeight!=0)mLinePaint.setStrokeWidth(bottomLineWeight);
+                if(showBottomLine&&bottomLine!=null)canvas.drawLine(bottomLine,0,left,0,mLinePaint);
+                mLinePaint.setStrokeWidth(mLineWidth);
                 if (i % 10 == 0) {
                     value = String.valueOf((int) (mMinValue + i * mPerValue / 10));
                     if (mAlphaEnable) {
@@ -250,7 +260,7 @@ public class RulerView extends View {
                             height + mTextMarginTop + mTextHeight, mTextPaint);
                 }
             }
-            bottomLinePo=left;
+            bottomLine=left;
         }
     }
 
