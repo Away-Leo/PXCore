@@ -188,6 +188,10 @@ public class RulerView extends View {
         setVisibility(VISIBLE);
     }
 
+    public float getSelectorValue() {
+        return mSelectorValue;
+    }
+
     public void setOnValueChangeListener(OnValueChangeListener listener) {
         mListener = listener;
     }
