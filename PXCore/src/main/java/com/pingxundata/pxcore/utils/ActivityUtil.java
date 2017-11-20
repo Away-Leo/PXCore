@@ -12,6 +12,8 @@ import android.support.v4.app.Fragment;
  */
 public class ActivityUtil {
 
+    private static Class<?> mCallBackActivity;
+
     /**
      * 执行到下一个页面
      * @param activity
@@ -157,6 +159,42 @@ public class ActivityUtil {
         android.os.Process.killProcess(android.os.Process.myUid());
         android.os.Process.killProcess(android.os.Process.myPid());
         android.os.Process.killProcess(android.os.Process.myTid());
+    }
+
+    /**
+     * @Author: Away
+     * @Description: 具有二次回调activity的跳转 例如 从A页面跳到B页面，回调是C页面，那么B页面会回调转跳到C页面并通过bundle传值
+     * @Param: activity
+     * @Param: targetActivity
+     * @Param: callBackActivity
+     * @Param: data
+     * @Param: isFinishCurrent
+     * @Return void
+     * @Date 2017/11/20 10:54
+     * @Copyright 重庆平讯数据
+     */
+    public static void recallGoForward(Activity activity,Class<?> targetActivity,Class<?> callBackActivity,Bundle data,boolean isFinishCurrent){
+        mCallBackActivity=callBackActivity;
+        Intent intent = new Intent(activity, targetActivity);
+        if (data != null) intent.putExtras(data);//当数据包不为空时写入数据
+        activity.startActivity(intent);
+        if (isFinishCurrent) activity.finish();
+    }
+
+    /**
+     * @Author: Away
+     * @Description: 执行回调
+     * @Param: activity
+     * @Param: bundle
+     * @Param: isFinishCurrent
+     * @Return void
+     * @Date 2017/11/20 11:00
+     * @Copyright 重庆平讯数据
+     */
+    public static void doCallBack(Activity activity,Bundle bundle,boolean isFinishCurrent){
+        if(ObjectHelper.isNotEmpty(mCallBackActivity)){
+            goForward(activity,mCallBackActivity,bundle,isFinishCurrent);
+        }
     }
 
 }
