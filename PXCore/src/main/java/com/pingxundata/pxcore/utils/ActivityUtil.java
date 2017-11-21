@@ -197,4 +197,8 @@ public class ActivityUtil {
         }
     }
 
+    public static Class<?> getCallBackActivity() {
+        return mCallBackActivity;
+    }
+
 }
