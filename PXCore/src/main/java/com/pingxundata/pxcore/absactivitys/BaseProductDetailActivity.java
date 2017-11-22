@@ -1,9 +1,11 @@
 package com.pingxundata.pxcore.absactivitys;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,6 +16,8 @@ import com.pingxundata.pxcore.R;
 import com.pingxundata.pxcore.applications.BaseApplication;
 import com.pingxundata.pxcore.utils.ActivityUtil;
 import com.pingxundata.pxcore.utils.ObjectHelper;
+
+import java.util.List;
 
 /**
 * @Title: BaseProductDetailActivity.java
@@ -91,11 +95,27 @@ public abstract class BaseProductDetailActivity extends AppCompatActivity {
         dataBundle.putInt("topBack",this.topBack);
         dataBundle.putString("sourceProductId",this.sourceProductId);
         BaseApplication.addActivity(this);
+        closeRecommendActivity();
         //如果开关为推荐
         if(ObjectHelper.isNotEmpty(recommendCd)&&recommendCd==0){
             ActivityUtil.goForward(this, PXSimpleWebViewActivity.class, WEBVIEW_RESULT, dataBundle);
         }else{//一般流程
             ActivityUtil.goForward(this,PXSimpleWebViewActivity.class,dataBundle,true);
+        }
+    }
+
+    private void closeRecommendActivity(){
+        try{
+            List<Activity> allActivitys=BaseApplication.activitys;
+            if(ObjectHelper.isNotEmpty(allActivitys)){
+                for(Activity temp:allActivitys){
+                    if(temp.getClass().getName().equalsIgnoreCase(PXRecommendActivity.class.getName())){
+                        temp.finish();
+                    }
+                }
+            }
+        }catch (Exception e){
+            Log.e("1001001","立即申请关闭推荐activity出错",e);
         }
     }
 

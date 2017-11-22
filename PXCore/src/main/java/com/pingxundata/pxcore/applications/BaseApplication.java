@@ -36,7 +36,7 @@ public abstract class BaseApplication extends Application {
 
     public static int CONNECTION_TIMED_OUT = 5000;//设置连接超时时间
 
-    private static List<Activity> activitys = new ArrayList<>();
+    public static List<Activity> activitys = new ArrayList<>();
 
     @Override
     public void onCreate() {
