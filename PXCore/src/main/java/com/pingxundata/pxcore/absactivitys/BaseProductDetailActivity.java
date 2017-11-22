@@ -112,7 +112,7 @@ public abstract class BaseProductDetailActivity extends AppCompatActivity {
             if(ObjectHelper.isNotEmpty(allActivitys)){
                 for(Activity temp:allActivitys){
                     if(temp.getClass().getName().equalsIgnoreCase(PXRecommendActivity.class.getName())
-                            ||temp.getClass().getName().equalsIgnoreCase(BaseProductDetailActivity.class.getName())){
+                            ||temp.getClass().getName().equalsIgnoreCase(this.getClass().getName())){
                         temp.finish();
                     }
                 }
