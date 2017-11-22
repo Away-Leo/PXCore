@@ -94,8 +94,10 @@ public abstract class BaseProductDetailActivity extends AppCompatActivity {
         dataBundle.putInt("titleColor",this.titleColor);
         dataBundle.putInt("topBack",this.topBack);
         dataBundle.putString("sourceProductId",this.sourceProductId);
-        BaseApplication.addActivity(this);
+        //清理已经打开的详情页面
         closeRecommendActivity();
+        //添加当前页面
+        BaseApplication.addActivity(this);
         //如果开关为推荐
         if(ObjectHelper.isNotEmpty(recommendCd)&&recommendCd==0){
             ActivityUtil.goForward(this, PXSimpleWebViewActivity.class, WEBVIEW_RESULT, dataBundle);
@@ -109,7 +111,8 @@ public abstract class BaseProductDetailActivity extends AppCompatActivity {
             List<Activity> allActivitys=BaseApplication.activitys;
             if(ObjectHelper.isNotEmpty(allActivitys)){
                 for(Activity temp:allActivitys){
-                    if(temp.getClass().getName().equalsIgnoreCase(PXRecommendActivity.class.getName())){
+                    if(temp.getClass().getName().equalsIgnoreCase(PXRecommendActivity.class.getName())
+                            ||temp.getClass().getName().equalsIgnoreCase(BaseProductDetailActivity.class.getName())){
                         temp.finish();
                     }
                 }
