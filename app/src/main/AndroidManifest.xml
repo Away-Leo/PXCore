@@ -31,7 +31,7 @@
                 <!--android:resource="@xml/file_paths" />-->
         <!--</provider>-->
         <provider
-            android:name="com.pingxun.library.guomeilibrary.meijie.DemoFileProvider"
+            android:name="com.pingxundata.pxcore.providers.PXFileProvider"
             android:authorities="com.pingxundata.library.demo.pxcoredemo.demoprovider"
             android:exported="false"
             android:grantUriPermissions="true">

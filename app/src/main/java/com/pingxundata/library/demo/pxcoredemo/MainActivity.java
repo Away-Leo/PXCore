@@ -3,11 +3,8 @@ package com.pingxundata.library.demo.pxcoredemo;
 import android.Manifest;
 import android.app.AppOpsManager;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,16 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.pingxun.library.commondialog.CommomDialog;
-import com.pingxun.library.guomeilibrary.meijie.MIUIUtil;
-import com.pingxundata.pxcore.metadata.interfaces.IFunction;
-import com.pingxundata.pxcore.utils.GDlocationUtil;
-import com.pingxundata.pxcore.utils.IntegralWallManager;
-import com.pingxundata.pxcore.utils.ToastUtils;
+import com.pingxundata.pxcore.utils.MIUIUtil;
 import com.pingxundata.pxcore.utils.WallManager;
-import com.pingxundata.pxcore.utils.WechatBanner;
 import com.pingxundata.pxcore.views.DragFloatActionButton;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
