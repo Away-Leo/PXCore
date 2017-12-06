@@ -1,11 +1,17 @@
 package com.pingxundata.pxcore.views;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewParent;
 import android.webkit.WebSettings;
+
+import com.pingxundata.pxcore.bridges.PXBridge;
+import com.pingxundata.pxmeta.views.NestWebView;
+import com.pingxundata.pxmeta.views.SwipeRefreshLayout;
 
 
 /**
@@ -20,16 +26,30 @@ public class BaseWebView extends NestWebView implements SwipeRefreshLayout.CanSc
 
     boolean mIgnoreTouchCancel;
 
+    protected PXBridge pxSimpleBridge;
+
+    protected Context mContext;
+
     public BaseWebView(Context context) {
         this(context, null);
+        mContext=context;
     }
 
     public BaseWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mContext=context;
         init();
     }
 
     private void init() {
+        pxSimpleBridge=new PXBridge();
+        try{
+            pxSimpleBridge.setActivity((Activity) mContext);
+        }catch (Exception e){
+            Log.e("20010001","桥设置activity出错",e);
+        }
+        addJavascriptInterface(pxSimpleBridge,"PXWeb");
+
         WebSettings webSetting = getSettings();
         webSetting.setJavaScriptEnabled(true);
         webSetting.setAppCacheEnabled(true);

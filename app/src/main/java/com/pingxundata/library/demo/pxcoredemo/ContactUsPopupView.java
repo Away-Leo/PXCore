@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.widget.TextView;
 
-import com.pingxundata.pxcore.views.basepopupview.BasePopupWindow;
+import com.pingxundata.pxmeta.views.basepopupview.BasePopupWindow;
 
 
 /**

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.pingxundata.pxcore.metadata.staticdatas.CacheData;
-import com.pingxundata.pxcore.utils.ObjectHelper;
+import com.pingxundata.pxmeta.utils.ObjectHelper;
 
 public class UpdateChecker {
 

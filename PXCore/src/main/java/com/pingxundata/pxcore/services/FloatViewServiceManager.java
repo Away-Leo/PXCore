@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.view.View;
 
 import com.pingxundata.pxcore.metadata.staticdatas.CacheData;
-import com.pingxundata.pxcore.utils.ObjectHelper;
+import com.pingxundata.pxmeta.utils.ObjectHelper;
 
 import java.util.List;
 

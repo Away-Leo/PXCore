@@ -14,4 +14,9 @@ public class PXSimpleApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
     }
+
+    @Override
+    protected void appInit() {
+
+    }
 }

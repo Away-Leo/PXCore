@@ -9,13 +9,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.pingxundata.pxcore.R;
 import com.pingxundata.pxcore.metadata.entity.ProductRecommend;
 import com.pingxundata.pxcore.metadata.interfaces.IFunction;
-import com.pingxundata.pxcore.utils.GlideImgManager;
-import com.pingxundata.pxcore.utils.ObjectHelper;
-import com.pingxundata.pxcore.utils.ToastUtils;
+import com.pingxundata.pxmeta.utils.GlideImgManager;
+import com.pingxundata.pxmeta.utils.ObjectHelper;
+import com.pingxundata.pxmeta.utils.ToastUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

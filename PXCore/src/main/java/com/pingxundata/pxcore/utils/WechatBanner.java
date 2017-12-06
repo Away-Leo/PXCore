@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.pingxundata.pxcore.R;
 import com.pingxundata.pxcore.views.WeChatPopupView;
+import com.pingxundata.pxmeta.utils.ObjectHelper;
 
 /**
 * @Title: WechatBanner.java

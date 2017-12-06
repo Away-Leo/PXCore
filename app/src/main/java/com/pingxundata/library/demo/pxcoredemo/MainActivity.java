@@ -15,9 +15,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.pingxun.library.commondialog.CommomDialog;
-import com.pingxundata.pxcore.utils.MIUIUtil;
+import com.pingxundata.pxcore.bridges.PXBridge;
+import com.pingxundata.pxcore.bridges.PXSimpleBridge;
 import com.pingxundata.pxcore.utils.WallManager;
-import com.pingxundata.pxcore.views.DragFloatActionButton;
+import com.pingxundata.pxmeta.utils.MIUIUtil;
+import com.pingxundata.pxmeta.views.DragFloatActionButton;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        UpdateChecker.checkForDialog(this,"xiaomi-DKQB","https://119.23.64.92/front/product/findProductVersion.json");
 //        final String urrrl="http://m.doudouhua.cn/register/?agent=DDHAPP&channel=miaobidai";
 //        final String urrrl="http://phone.daishuqianbao.com/h5/invite.jsp?invitationCode=null&channelCode=mbd";
-        final String urrrl="http://phone.daishuqianbao.com/h5/invite.jsp?channelCode=mbd";
+        final String urrrl="http://www.pingxundata.com/testindex.html";
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            }
 //        });
 //        getCellLac();
-        WallManager.with(this,(DragFloatActionButton)findViewById(R.id.wallFloatingButton),"APP",1).doWall();
+        WallManager.with(this,(DragFloatActionButton) findViewById(R.id.wallFloatingButton),"APP",1).doWall();
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

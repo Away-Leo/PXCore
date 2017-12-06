@@ -2,20 +2,13 @@ package com.pingxundata.pxcore.absactivitys;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.pingxundata.pxcore.R;
 import com.pingxundata.pxcore.applications.BaseApplication;
-import com.pingxundata.pxcore.utils.ActivityUtil;
-import com.pingxundata.pxcore.utils.ObjectHelper;
+import com.pingxundata.pxmeta.utils.ActivityUtil;
+import com.pingxundata.pxmeta.utils.ObjectHelper;
 
 import java.util.List;
 

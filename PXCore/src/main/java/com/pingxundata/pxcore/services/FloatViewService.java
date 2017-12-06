@@ -19,7 +19,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.pingxundata.pxcore.R;
-import com.pingxundata.pxcore.utils.DensityUtil;
+import com.pingxundata.pxmeta.utils.DensityUtil;
 
 public class FloatViewService extends Service {
 
@@ -73,7 +73,7 @@ public class FloatViewService extends Service {
 		// 获取浮动窗口视图所在布局
 		mFloatLayout = (LinearLayout) inflater.inflate(
 				R.layout.alert_window_menu, null);
-		mFloatLayout.setPadding(0,0,DensityUtil.dip2px(this,-25),0);
+		mFloatLayout.setPadding(0,0, DensityUtil.dip2px(this,-25),0);
 		// 添加mFloatLayout
 		mWindowManager.addView(mFloatLayout, wmParams);
 		// 浮动窗口按钮

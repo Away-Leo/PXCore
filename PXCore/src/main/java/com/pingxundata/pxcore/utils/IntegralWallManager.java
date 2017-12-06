@@ -13,12 +13,14 @@ import android.view.Gravity;
 
 import com.pingxun.library.commondialog.CommomDialog;
 import com.pingxundata.pxcore.R;
-import com.pingxundata.pxcore.http.PXHttp;
-import com.pingxundata.pxcore.metadata.entity.RequestResult;
 import com.pingxundata.pxcore.metadata.enums.ENUM_REQUEST_URL;
 import com.pingxundata.pxcore.metadata.interfaces.IFunction;
 import com.pingxundata.pxcore.services.FloatViewServiceManager;
 import com.pingxundata.pxcore.views.WallPopupView;
+import com.pingxundata.pxmeta.http.PXHttp;
+import com.pingxundata.pxmeta.utils.MD5Utils;
+import com.pingxundata.pxmeta.utils.MIUIUtil;
+import com.pingxundata.pxmeta.utils.ObjectHelper;
 
 import org.json.JSONObject;
 
@@ -125,7 +127,7 @@ public class IntegralWallManager {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
         String imeiStr=tm.getDeviceId();
         if(ObjectHelper.isNotEmpty(imeiStr)&&!imeiStr.equalsIgnoreCase("null")){
-            String imei16=MD5Utils.encode(imeiStr).substring(8,24).toUpperCase();
+            String imei16= MD5Utils.encode(imeiStr).substring(8,24).toUpperCase();
             String encryptStr=MD5Utils.encode(imeiStr+imei16+"pingxundata1234567890");
             //发送数据
             Map<String,String> conditions=new HashMap<>();
@@ -151,12 +153,12 @@ public class IntegralWallManager {
 
     private static PXHttp.OnResultHandler onHander=new PXHttp.OnResultHandler() {
         @Override
-        public void onResult(RequestResult requestResult, String jsonStr, int flag) {
+        public void onResult(com.pingxundata.pxmeta.pojo.RequestResult requestResult, String s, int i) {
 
         }
 
         @Override
-        public void onError(int flag) {
+        public void onError(int i) {
 
         }
     };

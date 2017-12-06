@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import com.pingxundata.pxcore.R;
 import com.pingxundata.pxcore.applications.BaseApplication;
-import com.pingxundata.pxcore.http.PXHttp;
 import com.pingxundata.pxcore.metadata.enums.ENUM_REQUEST_URL;
-import com.pingxundata.pxcore.utils.ObjectHelper;
+import com.pingxundata.pxmeta.http.PXHttp;
+import com.pingxundata.pxmeta.utils.ObjectHelper;
 
 import java.util.HashMap;
 import java.util.Map;

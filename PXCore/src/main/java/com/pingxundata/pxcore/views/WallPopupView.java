@@ -1,21 +1,15 @@
 package com.pingxundata.pxcore.views;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
-import android.content.Intent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.pingxundata.pxcore.R;
-import com.pingxundata.pxcore.views.basepopupview.BasePopupWindow;
+import com.pingxundata.pxmeta.views.basepopupview.BasePopupWindow;
 
 
 /**

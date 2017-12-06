@@ -12,7 +12,8 @@ import android.view.Gravity;
 import com.pingxun.library.commondialog.CommomDialog;
 import com.pingxundata.pxcore.R;
 import com.pingxundata.pxcore.metadata.entity.Wall;
-import com.pingxundata.pxcore.views.DragFloatActionButton;
+import com.pingxundata.pxmeta.utils.MIUIUtil;
+import com.pingxundata.pxmeta.views.DragFloatActionButton;
 
 /**
  * @author Away
@@ -28,7 +29,7 @@ public class WallManager {
 
     private static Wall wall;
 
-    public static Wall with(Activity context, DragFloatActionButton button, String appName,int isOpen) {
+    public static Wall with(Activity context, DragFloatActionButton button, String appName, int isOpen) {
         mContext = context;
         wall=new Wall(context, button, appName,isOpen);
         return wall;

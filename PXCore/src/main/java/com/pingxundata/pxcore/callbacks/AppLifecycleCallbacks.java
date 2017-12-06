@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.pingxundata.pxcore.metadata.staticdatas.CacheData;
 import com.pingxundata.pxcore.services.FloatViewServiceManager;
-import com.pingxundata.pxcore.utils.ObjectHelper;
+import com.pingxundata.pxmeta.utils.ObjectHelper;
 
 /**
 * @Title: AppLifecycleCallbacks.java

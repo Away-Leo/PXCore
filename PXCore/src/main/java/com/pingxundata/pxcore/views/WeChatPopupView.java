@@ -8,14 +8,13 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.pingxundata.pxcore.R;
-import com.pingxundata.pxcore.views.basepopupview.BasePopupWindow;
+import com.pingxundata.pxmeta.views.basepopupview.BasePopupWindow;
 
 
 /**

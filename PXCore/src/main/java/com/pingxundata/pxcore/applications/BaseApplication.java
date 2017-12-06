@@ -2,6 +2,7 @@ package com.pingxundata.pxcore.applications;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
@@ -11,7 +12,7 @@ import com.lzy.okgo.cookie.store.SPCookieStore;
 import com.lzy.okgo.https.HttpsUtils;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.pingxundata.pxcore.callbacks.AppLifecycleCallbacks;
-import com.pingxundata.pxcore.utils.ObjectHelper;
+import com.pingxundata.pxmeta.utils.ObjectHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +39,18 @@ public abstract class BaseApplication extends Application {
 
     public static List<Activity> activitys = new ArrayList<>();
 
+    public static Context mContext;
+
+    public static String bridgeClassName="";
+
     @Override
     public void onCreate() {
         super.onCreate();
         //必须调用初始化
         initOkGo();
         registerActivityLifecycleCallbacks(new AppLifecycleCallbacks());
+        mContext=this;
+        appInit();
     }
 
     public static void addActivity(Activity activity) {
@@ -130,4 +137,10 @@ public abstract class BaseApplication extends Application {
     public void onTerminate() {
         super.onTerminate();
     }
+
+    public static Context getAppContext() {
+        return mContext;
+    }
+
+    protected abstract void appInit();
 }

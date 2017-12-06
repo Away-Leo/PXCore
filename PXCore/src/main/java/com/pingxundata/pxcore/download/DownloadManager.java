@@ -1,10 +1,9 @@
 package com.pingxundata.pxcore.download;
 
 
-
 import android.app.Application;
 
-import com.pingxundata.pxcore.utils.ObjectHelper;
+import com.pingxundata.pxmeta.utils.ObjectHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
