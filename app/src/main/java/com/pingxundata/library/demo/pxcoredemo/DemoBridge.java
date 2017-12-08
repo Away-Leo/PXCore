@@ -9,7 +9,7 @@ import com.pingxundata.pxmeta.utils.ToastUtils;
 
 public class DemoBridge extends PXBridge{
 
-    public void testBridge(){
+    public void pxShare(){
         ToastUtils.showToast(mActivity,"eeeeeeeeeeeeeeeeee");
     }
 }
