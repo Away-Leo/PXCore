@@ -166,11 +166,13 @@ public abstract class PXWebViewActivity extends Activity {
         pxWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String ur) {
-                if(ur.toLowerCase().startsWith("http")){
-                    return false;//设为true使用WebView加载网页而不调用外部浏览器
-                }else{
-                    return true;
-                }
+//                if(ur.toLowerCase().startsWith("http")){
+//                    return false;//设为true使用WebView加载网页而不调用外部浏览器
+//                }else{
+                    ur=ur.replaceAll("https://fir.im/","https://www.fir.im/");
+                    pxWebView.loadUrl(ur);
+                    return super.shouldOverrideUrlLoading(view,ur);
+//                }
             }
 
             @Override
